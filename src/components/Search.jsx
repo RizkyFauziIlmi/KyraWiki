@@ -41,7 +41,6 @@ export const Search = () => {
       setManga(arr2);
       const arr3 = arr1.concat(arr2);
       setDatas(arr3);
-      console.log(arr3);
     };
     search();
   }, [datas, q]);

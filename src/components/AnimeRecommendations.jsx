@@ -14,7 +14,6 @@ export const AnimeRecommendations = () => {
     const response = await axios.get(
       "https://api.jikan.moe/v4/recommendations/anime"
     );
-    console.log(response.data.data[0].entry);
     setDatas(response.data.data);
   };
 
@@ -33,7 +32,6 @@ export const AnimeRecommendations = () => {
             </GridItem>
           );
         })} */}
-        {console.log(datas[0])}
       </Grid>
       <Button onClick={getAnimeRecommendations}>get</Button>
     </>

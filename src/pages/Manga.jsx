@@ -168,7 +168,6 @@ export const Manga = () => {
                         </Text>
                       </Link>
                     </Text>
-                    {console.log(relation)}
                   </ListItem>
                 );
               })}
