@@ -126,7 +126,7 @@ export const Manga = () => {
                 ? "There is No Background"
                 : datas.background}
             </Text>
-            <TableContainer>
+            <TableContainer width={'100%'}>
               <Table variant="simple">
                 <Tbody>
                   <Tr>
@@ -148,7 +148,7 @@ export const Manga = () => {
                 </Tbody>
               </Table>
             </TableContainer>
-            <UnorderedList>
+            <UnorderedList width={'100%'}>
               {datas.relations.map((relation) => {
                 return (
                   <ListItem>

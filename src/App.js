@@ -2,12 +2,14 @@ import React from 'react'
 import { ChakraProvider } from '@chakra-ui/react';
 import { NavBar } from './components/NavBar';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { Index } from './pages/Index';
 import { RandomGenerator } from './components/RandomGenerator';
 import { AnimeRecommendations } from './components/AnimeRecommendations';
 import { Search } from './components/Search';
 import { Anime } from './pages/Anime';
 import { Manga } from './pages/Manga';
+import './static/Global/global.css'
+import { Top } from './pages/Top';
+import { Index } from './pages/Index';
 
 
 const App = () => {
@@ -18,6 +20,7 @@ const App = () => {
         <NavBar />
         <Routes>
           <Route path='/' element={<Index />} />
+          <Route path='/top-all' element={<Top />} />
           <Route path='/random-generator' element={<RandomGenerator />} />
           <Route path='/anime-recommendation' element={<AnimeRecommendations />} />
           <Route path='/search/:q' element={<Search  />}/>

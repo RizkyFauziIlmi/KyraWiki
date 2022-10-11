@@ -19,16 +19,30 @@ import {
 } from "@chakra-ui/react";
 import { MoonIcon, SunIcon, HamburgerIcon, SearchIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
+import { useEffect, useRef } from "react";
 
 export const NavBar = () => {
   const { colorMode, toggleColorMode } = useColorMode();
   const { isOpen, onClose, onOpen } = useDisclosure();
   const btnRef = React.useRef();
   const [q, setQ] = React.useState("");
+  const searchRef = useRef(null)
 
   const changeValue = (event) => {
     setQ(event.target.value);
   };
+
+  const keyboardHandle = (event) => {
+    if (event.key === "Enter") {
+      searchRef.current.focus();
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('keydown', keyboardHandle)
+    return () => window.removeEventListener('keydown', keyboardHandle)
+  }, []);
+
 
   return (
     <Flex boxShadow={"dark-lg"} p={5} alignItems={"center"} gap={2}>
@@ -36,10 +50,10 @@ export const NavBar = () => {
         <Heading size={"md"}>KyraWiki</Heading>
       </Link>
       <InputGroup>
-        <Input value={q} onChange={changeValue}/>
+        <Input value={q} onChange={changeValue} />
         <InputRightElement>
-          <Link to={`search/${q}`} target={'_self'}>
-            <IconButton icon={<SearchIcon />} />
+          <Link to={`search/${q}`} target={"_self"}>
+            <IconButton icon={<SearchIcon />} ref={searchRef} />
           </Link>
         </InputRightElement>
       </InputGroup>
@@ -66,6 +80,9 @@ export const NavBar = () => {
               </Link>
               <Link to="/anime-recommendation">
                 <Button>Anime Recommendation</Button>
+              </Link>
+              <Link to="/top-all">
+                <Button>Top of All</Button>
               </Link>
             </Flex>
           </DrawerBody>
