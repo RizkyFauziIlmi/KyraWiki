@@ -1,10 +1,7 @@
 import React from "react";
 import { useEffect } from "react";
 import {
-  Text,
-  Image,
   Grid,
-  GridItem,
   Box,
   useBreakpointValue,
   Heading,
@@ -23,7 +20,7 @@ import {
   useBoolean,
   Switch,
 } from "@chakra-ui/react";
-import { useParams, Link} from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { search } from "../utils/fetch";
 import { SettingsIcon } from "@chakra-ui/icons";
 import { Result } from '../components/Result'
