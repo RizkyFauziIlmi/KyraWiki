@@ -2,9 +2,9 @@ import React from 'react'
 import { ChakraProvider } from '@chakra-ui/react';
 import { NavBar } from './components/NavBar';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { RandomGenerator } from './components/RandomGenerator';
-import { AnimeRecommendations } from './components/AnimeRecommendations';
-import { Search } from './components/Search';
+import { RandomGenerator } from './pages/RandomGenerator';
+import { AnimeRecommendations } from './pages/AnimeRecommendations';
+import { Search } from './pages/Search';
 import { Anime } from './pages/Anime';
 import { Manga } from './pages/Manga';
 import './static/Global/global.css'

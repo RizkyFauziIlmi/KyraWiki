@@ -7,14 +7,10 @@ import {
   Link,
   VStack,
   Flex,
-  HStack,
-  Alert,
-  AlertIcon,
   TagLabel,
   Stat,
   StatLabel,
   StatNumber,
-  StatGroup,
   Divider,
   Tag,
   Table,
@@ -23,12 +19,12 @@ import {
   Td,
   TableContainer,
   Select,
-  StatArrow,
   Avatar,
 } from "@chakra-ui/react";
-import ReactPlayer from "react-player/youtube";
-import { StarIcon, ViewIcon } from "@chakra-ui/icons";
 import { FaHeart } from "react-icons/fa";
+import { HeadSection } from "../components/HeadSection";
+import { Player } from "../components/Player";
+import { Synopsis } from "../components/Synopsis";
 
 export const RandomGenerator = () => {
   const [datas, setDatas] = React.useState();
@@ -53,94 +49,11 @@ export const RandomGenerator = () => {
         return (
           <Flex gap={10} flexDir={window.innerWidth <= 854 ? "column" : "row"}>
             <VStack>
-              <Link href={datas.url} target={"_blank"}>
-                <Heading size={"md"} cursor={"pointer"} textAlign={"center"}>
-                  {datas.title}
-                </Heading>
-              </Link>
-              <Link href={`/anime/${datas.mal_id}`}>
-                <Image
-                  src={datas.images.jpg.image_url}
-                  _hover={{ transform: "scale(1.01)" }}
-                  transition={"all 0.5s"}
-                  borderRadius={5}
-                  boxShadow={"dark-lg"}
-                  alt={datas.name}
-                />
-              </Link>
-              <HStack>
-                {datas.genres.map((genre) => {
-                  return (
-                    <Link href={genre.url} key={genre.name} target={"_blank"}>
-                      <Tag size={"sm"} variant="solid" colorScheme="teal">
-                        {genre.name}
-                      </Tag>
-                    </Link>
-                  );
-                })}
-              </HStack>
-              <StatGroup gap={10} textAlign={"center"}>
-                <Stat>
-                  <StatLabel>Score</StatLabel>
-                  <StatNumber>
-                    <Flex
-                      alignItems={"center"}
-                      justifyContent={"center"}
-                      gap={2}
-                    >
-                      <StarIcon />
-                      <Text>{datas.score === null ? "-" : datas.score}</Text>
-                    </Flex>
-                  </StatNumber>
-                </Stat>
-                <Stat>
-                  <StatLabel>Members</StatLabel>
-                  <StatNumber>
-                    <Flex
-                      alignItems={"center"}
-                      justifyContent={"center"}
-                      gap={2}
-                    >
-                      <ViewIcon />
-                      <Text>
-                        {datas.members === null ? "-" : datas.members}
-                      </Text>
-                    </Flex>
-                  </StatNumber>
-                </Stat>
-                <Stat>
-                  <StatLabel>Rank</StatLabel>
-                  <StatNumber>
-                    <Flex
-                      alignItems={"center"}
-                      justifyContent={"center"}
-                      gap={2}
-                    >
-                      <StatArrow
-                        type={datas.rank <= 1000 ? "increase" : "decrease"}
-                      />
-                      <Text>{datas.rank === null ? "-" : datas.rank}</Text>
-                    </Flex>
-                  </StatNumber>
-                </Stat>
-              </StatGroup>
-              <Divider />
+              <HeadSection datas={datas} target={`../anime/${datas.mal_id}`} />
             </VStack>
             <Flex flexDir={"column"} width={"100%"}>
-              {datas.trailer.url === null ? (
-                <Alert status="error" height={"max-content"}>
-                  <AlertIcon />
-                  There is no trailer
-                </Alert>
-              ) : (
-                <ReactPlayer
-                  url={datas.trailer.url}
-                  loop
-                  controls
-                  width={"100%"}
-                />
-              )}
-              <Text>{datas.synopsis}</Text>
+              <Player datas={datas} />
+              <Synopsis datas={datas} />
               <TableContainer>
                 <Table variant="simple">
                   <Tbody>
@@ -201,79 +114,8 @@ export const RandomGenerator = () => {
             flexDir={window.innerWidth <= 854 ? "column" : "row"}
           >
             <VStack>
-              <Link href={datas.url} target={"_blank"}>
-                <Heading size={"md"} cursor={"pointer"} textAlign={"center"}>
-                  {datas.title}
-                </Heading>
-              </Link>
-              <Link href={datas.url} target={"_blank"}>
-                <Image
-                  src={datas.images.jpg.image_url}
-                  _hover={{ transform: "scale(1.01)" }}
-                  transition={"all 0.5s"}
-                  borderRadius={5}
-                  boxShadow={"dark-lg"}
-                  alt={datas.name}
-                />
-              </Link>
-              <HStack>
-                {datas.genres.map((genre) => {
-                  return (
-                    <Link href={genre.url} key={genre.name} target={"_blank"}>
-                      <Tag size={"sm"} variant="solid" colorScheme="teal">
-                        {genre.name}
-                      </Tag>
-                    </Link>
-                  );
-                })}
-              </HStack>
-              <StatGroup gap={10} textAlign={"center"}>
-                <Stat>
-                  <StatLabel>Score</StatLabel>
-                  <StatNumber>
-                    <Flex
-                      alignItems={"center"}
-                      justifyContent={"center"}
-                      gap={2}
-                    >
-                      <StarIcon />
-                      <Text>{datas.score === null ? "-" : datas.score}</Text>
-                    </Flex>
-                  </StatNumber>
-                </Stat>
-                <Stat>
-                  <StatLabel>Members</StatLabel>
-                  <StatNumber>
-                    <Flex
-                      alignItems={"center"}
-                      justifyContent={"center"}
-                      gap={2}
-                    >
-                      <ViewIcon />
-                      <Text>
-                        {datas.members === null ? "-" : datas.members}
-                      </Text>
-                    </Flex>
-                  </StatNumber>
-                </Stat>
-                <Stat>
-                  <StatLabel>Rank</StatLabel>
-                  <StatNumber>
-                    <Flex
-                      alignItems={"center"}
-                      justifyContent={"center"}
-                      gap={2}
-                    >
-                      <StatArrow
-                        type={datas.rank <= 1000 ? "increase" : "decrease"}
-                      />
-                      <Text>{datas.rank === null ? "-" : datas.rank}</Text>
-                    </Flex>
-                  </StatNumber>
-                </Stat>
-              </StatGroup>
-              <Divider />
-              <Text>{datas.synopsis}</Text>
+              <HeadSection datas={datas} target={`../manga/${datas.mal_id}`} />
+              <Synopsis datas={datas}/>
               <TableContainer>
                 <Table variant="simple">
                   <Tbody>
