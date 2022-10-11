@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import {
@@ -20,29 +19,14 @@ import { Synopsis } from "../components/Synopsis";
 import { Background } from "../components/Background";
 import { Relations } from "../components/Relations";
 import { Link } from "react-router-dom";
+import { getByIdFull } from '../utils/fetch'
 
 export const Anime = () => {
   const [datas, setDatas] = React.useState([]);
-  // const [animeCharacters, setAnimeCharacters] = React.useState([]);
   const { id } = useParams();
 
   useEffect(() => {
-    const getAnimeById = async () => {
-      const response = await axios.get(
-        `https://api.jikan.moe/v4/anime/${id}/full`
-      );
-      setDatas(response.data.data);
-    };
-
-    // const getAnimeCharacters = async () => {
-    //   const response = await axios.get(
-    //     `https://api.jikan.moe/v4/anime/${id}/characters`
-    //   );
-    //   setAnimeCharacters(response.data.data);
-    // };
-
-    getAnimeById();
-    // getAnimeCharacters();
+    getByIdFull(id, 'anime', setDatas)
   }, [id]);
 
   const showContent = () => {
@@ -120,13 +104,7 @@ export const Anime = () => {
         </Flex>
       );
     } else {
-      const getAnimeById = async () => {
-        const response = await axios.get(
-          `https://api.jikan.moe/v4/anime/${id}/full`
-        );
-        setDatas(response.data.data);
-      };
-      getAnimeById();
+      getByIdFull(id, 'anime', setDatas)
     }
   };
 

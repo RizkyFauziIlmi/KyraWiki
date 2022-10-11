@@ -10,6 +10,7 @@ import { Manga } from './pages/Manga';
 import './static/Global/global.css'
 import { Top } from './pages/Top';
 import { Index } from './pages/Index';
+import { Character } from './pages/Character';
 
 
 const App = () => {
@@ -26,6 +27,7 @@ const App = () => {
           <Route path='/search/:q' element={<Search  />}/>
           <Route path='/anime/:id' element={<Anime  />}/>
           <Route path='/manga/:id' element={<Manga  />}/>
+          <Route path='/character/:id' element={<Character />} />
         </Routes>
       </BrowserRouter>
     </ChakraProvider>

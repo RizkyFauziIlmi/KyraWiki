@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 import { useEffect } from "react";
 import {
   Text,
@@ -8,14 +7,35 @@ import {
   GridItem,
   Box,
   useBreakpointValue,
+  Heading,
+  useDisclosure,
+  Button,
+  ModalOverlay,
+  ModalHeader,
+  Modal,
+  ModalContent,
+  ModalCloseButton,
+  ModalBody,
+  ModalFooter,
+  Flex,
+  RadioGroup,
+  Radio,
+  useBoolean,
+  Switch,
 } from "@chakra-ui/react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link} from "react-router-dom";
+import { search } from "../utils/fetch";
+import { SettingsIcon } from "@chakra-ui/icons";
 
 export const Search = () => {
   const { q } = useParams();
-  const [datas, setDatas] = React.useState([]);
   const [anime, setAnime] = React.useState([]);
   const [manga, setManga] = React.useState([]);
+  const [limit, setLimit] = React.useState(100);
+  const [orderBy, setOrderBy] = React.useState("rank");
+  const [adult, setAdult] = useBoolean(true)
+  const [sort, setSort] = React.useState("asc")
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const gridTemplate = useBreakpointValue(
     {
@@ -28,29 +48,63 @@ export const Search = () => {
   );
 
   useEffect(() => {
-    const search = async () => {
-      const responseAnime = await axios.get(
-        `https://api.jikan.moe/v4/anime?q=${q}`
-      );
-      const responseManga = await axios.get(
-        `https://api.jikan.moe/v4/manga?q=${q}`
-      );
-      const arr1 = responseAnime.data.data;
-      setAnime(arr1);
-      const arr2 = responseManga.data.data;
-      setManga(arr2);
-      const arr3 = arr1.concat(arr2);
-      setDatas(arr3);
-    };
-    search();
-  }, [datas, q]);
+    search(q, setAnime, setManga, limit, orderBy, sort);
+    
+  }, [limit, orderBy, q, sort])
 
   return (
     <Box p={5}>
+      <Flex justifyContent={"center"} width={"100vw"} gap={2}>
+        <Heading textAlign={"center"} pb={5}>
+          ({anime.length + manga.length}) Result for '{q}'{" "}
+        </Heading>
+        <Button onClick={onOpen} variant={"solid"} leftIcon={<SettingsIcon />}>
+          Filter
+        </Button>
+      </Flex>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader textAlign={"center"}>Filter</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Heading size={"sm"}>Order By :</Heading>
+            <RadioGroup name="order-by" onChange={setOrderBy} value={orderBy}>
+              <Radio value="rank">Rank</Radio>
+              <Radio value="popularity">Popularity</Radio>
+              <Radio value="members">Members</Radio>
+              <Radio value="type">Type</Radio>
+              <Radio value="title">Title</Radio>
+              <Radio value="rating">Rating</Radio>
+              <Radio value="favorites">Favorites</Radio>
+              <Radio value="score">Score</Radio>
+              <Radio value="mal_id">Mal Id</Radio>
+              <Radio value="episodes">Episodes</Radio>
+              <Radio value="start_date">Start Date</Radio>
+              <Radio value="end_date">End Date</Radio>
+              <Radio value="scored_by">Scored By</Radio>
+            </RadioGroup>
+            <Heading size={'sm'}>Adult Content Filter : </Heading>
+            <Switch isChecked={adult ? true : false} onChange={setAdult.toggle}/>
+            <Heading size={'sm'}>Sort : </Heading>
+            <RadioGroup name="sort" onChange={setSort} value={sort}>
+              <Radio value="desc">Desc</Radio>
+              <Radio value="asc">Asc</Radio>
+            </RadioGroup>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme="blue" mr={3} onClick={onClose}> 
+              Close
+            </Button>
+            <Button variant="ghost">Secondary Action</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
       <Grid templateColumns={gridTemplate} gap={6}>
         {anime.map((data) => {
           return (
-            <GridItem key={data.title} textAlign={"center"}>
+            <GridItem key={data.synopsis === null ? data.url : data.synopsis} textAlign={"center"}>
               <Link to={`../../anime/${data.mal_id}`} relative="path">
                 <Box>
                   <Image
@@ -73,7 +127,7 @@ export const Search = () => {
         })}
         {manga.map((data) => {
           return (
-            <GridItem key={data.title} textAlign={"center"}>
+            <GridItem key={data.synopsis === null ? data.url : data.synopsis} textAlign={"center"}>
               <Link to={`../../manga/${data.mal_id}`} relative="path">
                 <Box>
                   <Image

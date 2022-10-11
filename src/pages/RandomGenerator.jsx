@@ -4,7 +4,6 @@ import {
   Image,
   Text,
   Heading,
-  Link,
   VStack,
   Flex,
   TagLabel,
@@ -25,22 +24,18 @@ import { FaHeart } from "react-icons/fa";
 import { HeadSection } from "../components/HeadSection";
 import { Player } from "../components/Player";
 import { Synopsis } from "../components/Synopsis";
+import { getRandom } from '../utils/fetch'
+import { Link } from 'react-router-dom'
 
 export const RandomGenerator = () => {
   const [datas, setDatas] = React.useState();
   const [query, setQuery] = React.useState("anime");
 
-  const getRandomAnime = async () => {
-    const res = await fetch(`https://api.jikan.moe/v4/random/${query}`);
-    const resData = await res.json();
-    setDatas(resData.data);
-  };
-
   const changeValueOption = () => {
     const select = document.getElementById("select");
     const value = select.options[select.selectedIndex].value;
     setQuery(value);
-    getRandomAnime()
+    getRandom(query, setDatas)
   };
 
   const showContent = () => {
@@ -85,7 +80,7 @@ export const RandomGenerator = () => {
                       <Td>
                         {datas.studios.map((studio) => {
                           return (
-                            <Link href={studio.url} key={studio.name}>
+                            <Link to={studio.url} key={studio.name}>
                               <Tag
                                 size="lg"
                                 colorScheme="red"
@@ -151,12 +146,10 @@ export const RandomGenerator = () => {
             flexDir={window.innerWidth <= 854 ? "column" : "row"}
           >
             <VStack>
-              <Link href={datas.url} target={"_blank"}>
+              <Link relative="path" to={`../character/${datas.mal_id}`} >
                 <Heading size={"md"} cursor={"pointer"} textAlign={"center"}>
                   {datas.name}
                 </Heading>
-              </Link>
-              <Link href={datas.url} target={"_blank"}>
                 <Image
                   src={datas.images.jpg.image_url}
                   _hover={{ transform: "scale(1.01)" }}
@@ -184,14 +177,14 @@ export const RandomGenerator = () => {
                   <Tbody>
                     <Tr>
                       <Td>Name</Td>
-                      <Link href={datas.url}>
+                      <Link to={`../character/${datas.mal_id}`} relative="path">
                         <Td>{datas.name}</Td>
                       </Link>
                     </Tr>
                     <Tr>
                       <Td>Kanji Name</Td>
                       <Td>
-                        <Link href={datas.url}>
+                        <Link to={`../character/${datas.mal_id}`} relative="path">
                           <Tag size="lg" colorScheme="red" borderRadius="full">
                             <Avatar
                               src={datas.images.jpg.image_url}
@@ -369,7 +362,7 @@ export const RandomGenerator = () => {
     >
       {showContent()}
       <Flex gap={1}>
-        <Button onClick={getRandomAnime}>Generate</Button>
+        <Button onClick={() => getRandom(query, setDatas)}>Generate</Button>
         <Select
           id="select"
           onChange={changeValueOption}

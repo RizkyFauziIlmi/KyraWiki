@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import {
@@ -14,20 +13,14 @@ import { HeadSection } from "../components/HeadSection";
 import { Synopsis } from "../components/Synopsis";
 import { Background } from "../components/Background";
 import { Relations } from "../components/Relations";
+import { getByIdFull } from '../utils/fetch'
 
 export const Manga = () => {
   const [datas, setDatas] = React.useState([]);
   const { id } = useParams();
 
   useEffect(() => {
-    const getMangaById = async () => {
-      const response = await axios.get(
-        `https://api.jikan.moe/v4/manga/${id}/full`
-      );
-      setDatas(response.data.data);
-    };
-
-    getMangaById();
+    getByIdFull(id, 'manga', setDatas, true)
   }, [id]);
 
   const showContent = () => {
@@ -63,14 +56,7 @@ export const Manga = () => {
         </Flex>
       );
     } else {
-      const getMangaById = async () => {
-        const response = await axios.get(
-          `https://api.jikan.moe/v4/manga/${id}/full`
-        );
-        setDatas(response.data.data);
-      };
-
-      getMangaById();
+      getByIdFull(id, 'manga', setDatas)
     }
   };
 
