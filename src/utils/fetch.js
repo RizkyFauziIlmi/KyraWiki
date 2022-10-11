@@ -5,9 +5,6 @@ export const getTop = async (category = 'characters', set, debug = false) => {
       `https://api.jikan.moe/v4/top/${category}?limit=5`
     );
     set(response.data.data);
-    if (debug) {
-      console.log(response.data.data)
-    }
 };
 
 export const getByIdFull = async (id = 0, category, set, debug = false) => {

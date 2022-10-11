@@ -26,6 +26,7 @@ import {
 import { useParams, Link} from "react-router-dom";
 import { search } from "../utils/fetch";
 import { SettingsIcon } from "@chakra-ui/icons";
+import { Result } from '../components/Result'
 
 export const Search = () => {
   const { q } = useParams();
@@ -104,48 +105,12 @@ export const Search = () => {
       <Grid templateColumns={gridTemplate} gap={6}>
         {anime.map((data) => {
           return (
-            <GridItem key={data.synopsis === null ? data.url : data.synopsis} textAlign={"center"}>
-              <Link to={`../../anime/${data.mal_id}`} relative="path">
-                <Box>
-                  <Image
-                    alt={data.title}
-                    width={"200px"}
-                    height={"300px"}
-                    src={data.images.jpg.large_image_url}
-                    _hover={{ transform: "scale(1.05)" }}
-                    transition={"all 0.5s"}
-                    borderRadius={5}
-                    boxShadow={"dark-lg"}
-                  />
-                  <Text fontWeight={"bold"} pt={3} fontSize={"sm"}>
-                    {data.title}
-                  </Text>
-                </Box>
-              </Link>
-            </GridItem>
+            <Result data={data} key={data.synopsis === null ? data.url : data.synopsis}/>
           );
         })}
         {manga.map((data) => {
           return (
-            <GridItem key={data.synopsis === null ? data.url : data.synopsis} textAlign={"center"}>
-              <Link to={`../../manga/${data.mal_id}`} relative="path">
-                <Box>
-                  <Image
-                    alt={data.title}
-                    width={"200px"}
-                    height={"300px"}
-                    src={data.images.jpg.large_image_url}
-                    _hover={{ transform: "scale(1.05)" }}
-                    transition={"all 0.5s"}
-                    borderRadius={5}
-                    boxShadow={"dark-lg"}
-                  />
-                  <Text fontWeight={"bold"} pt={3} fontSize={"sm"}>
-                    {data.title}
-                  </Text>
-                </Box>
-              </Link>
-            </GridItem>
+            <Result data={data} key={data.synopsis === null ? data.url : data.synopsis}/>
           );
         })}
       </Grid>

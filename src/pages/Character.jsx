@@ -8,7 +8,7 @@ export const Character = () => {
     const { id } = useParams()
 
     useEffect(() => {
-        getByIdFull(id, 'characters', setDatas, true)
+        getByIdFull(id, 'characters', setDatas)
     }, [id])
 
   return (

@@ -20,7 +20,7 @@ export const Manga = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    getByIdFull(id, 'manga', setDatas, true)
+    getByIdFull(id, 'manga', setDatas)
   }, [id]);
 
   const showContent = () => {
