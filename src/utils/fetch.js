@@ -1,4 +1,5 @@
 import axios from "axios";
+import { todayString } from "./todayString";
 
 export const getTop = async (category = 'characters', set, debug = false) => {
     const response = await axios.get(
@@ -29,9 +30,25 @@ export const search = async (query, animeSetter, adult = false, order_by = "popu
   const responseAnime = await axios.get(
     `https://api.jikan.moe/v4/anime?q=${query}${adult === true ? '' : '&sfw'}&order_by=${order_by}${status === "not_specified" ? '&status=' : `&status=${status}`}&sort=${sort}${type === "all" ? "&type=" : `&type=${type}`}&limit=${limit}&min_score=${min_score}&max_score=${max_score}`
   );
-  const animeDatas = responseAnime.data.data;
-  animeSetter(animeDatas);
+  animeSetter(responseAnime.data.data);
   if (debug) {
-    console.log(animeDatas)
+    console.log(responseAnime.data.data)
   }
 };
+
+export const getSeasonNow = async (set, debug = false, limit = 5) => {
+  const response = await axios.get(`https://api.jikan.moe/v4/seasons/now?limit=${limit}`)
+  set(response.data.data)
+  if (debug) {
+    console.log(response.data.data)
+  } 
+}
+
+export const getSchedules = async (set, debug = false, day = "unset", limit = -1, rank = false) => {
+  const response = await axios.get(`https://api.jikan.moe/v4/schedules?${day === "unset" ? "" : `filter=${day}`}${limit === -1 ? "&limit=" : `&limit=${limit}`}`)
+  
+  set(response.data.data)
+  if (debug) {
+    console.log(response.data.data)
+  }
+}

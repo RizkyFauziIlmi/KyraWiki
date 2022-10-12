@@ -3,14 +3,18 @@ import React, { useEffect } from 'react'
 
 export const NoSeacrhPage = () => {
     const toast = useToast()
+    const id = 'toast'
 
     useEffect(() => {
-        toast({
-            title: "No Search Keyword",
-            description: "please enter keyword",
-            status: "error",
-            colorScheme: "red"
-        })
+        if (!toast.isActive(id)) {
+            toast({
+                id,
+                title: "No Search Keyword",
+                description: "please enter keyword",
+                status: "error",
+                colorScheme: "red"
+            })
+        }
     }, [toast])
 
   return (
