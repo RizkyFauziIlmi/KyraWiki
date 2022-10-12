@@ -11,6 +11,7 @@ import './static/Global/global.css'
 import { Top } from './pages/Top';
 import { Index } from './pages/Index';
 import { Character } from './pages/Character';
+import { NoSeacrhPage } from './pages/NoSeacrhPage';
 
 
 const App = () => {
@@ -24,6 +25,7 @@ const App = () => {
           <Route path='/top-all' element={<Top />} />
           <Route path='/random-generator' element={<RandomGenerator />} />
           <Route path='/anime-recommendation' element={<AnimeRecommendations />} />
+          <Route path='/search' element={<NoSeacrhPage />} />
           <Route path='/search/:q' element={<Search  />}/>
           <Route path='/anime/:id' element={<Anime  />}/>
           <Route path='/manga/:id' element={<Manga  />}/>
