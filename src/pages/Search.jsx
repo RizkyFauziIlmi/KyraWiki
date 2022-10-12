@@ -7,13 +7,6 @@ import {
   Heading,
   useDisclosure,
   Button,
-  ModalOverlay,
-  ModalHeader,
-  Modal,
-  ModalContent,
-  ModalCloseButton,
-  ModalBody,
-  ModalFooter,
   Flex,
   RadioGroup,
   Radio,
@@ -28,6 +21,7 @@ import {
   RangeSliderFilledTrack,
   RangeSliderThumb,
   RangeSliderTrack,
+  Collapse,
 } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import { search } from "../utils/fetch";
@@ -44,10 +38,10 @@ export const Search = () => {
   const [type, setType] = React.useState("all");
   const [limit, setLimit] = React.useState(50);
   const [showTooltip, setShowTooltip] = React.useState(false);
-  const [minScore, setMinScore] = React.useState(0)
-  const [maxScore, setMaxScore] = React.useState(10)
-  const [status, setStatus] = React.useState("not_specified")
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [minScore, setMinScore] = React.useState(0);
+  const [maxScore, setMaxScore] = React.useState(10);
+  const [status, setStatus] = React.useState("not_specified");
+  const { isOpen, onToggle } = useDisclosure();
 
   const gridTemplate = useBreakpointValue(
     {
@@ -60,7 +54,18 @@ export const Search = () => {
   );
 
   useEffect(() => {
-    search(q, setAnime, adult, orderBy, sort, type, limit, minScore, maxScore, status, true)
+    search(
+      q,
+      setAnime,
+      adult,
+      orderBy,
+      sort,
+      type,
+      limit,
+      minScore,
+      maxScore,
+      status
+    );
   }, [adult, limit, maxScore, minScore, orderBy, q, sort, status, type]);
 
   return (
@@ -71,112 +76,98 @@ export const Search = () => {
         </Heading>
         <Button
           size={"sm"}
-          onClick={onOpen}
+          onClick={onToggle}
           variant={"solid"}
           leftIcon={<SettingsIcon />}
         >
           Filter
         </Button>
       </Flex>
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader textAlign={"center"}>Filter</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <Heading size={"sm"}>Order By :</Heading>
-            <RadioGroup name="order-by" onChange={setOrderBy} value={orderBy}>
-              <Radio value="popularity">Popularity</Radio>
-              <Radio value="rank">Rank</Radio>
-              <Radio value="members">Members</Radio>
-              <Radio value="type">Type</Radio>
-              <Radio value="title">Title</Radio>
-              <Radio value="rating">Rating</Radio>
-              <Radio value="favorites">Favorites</Radio>
-              <Radio value="score">Score</Radio>
-              <Radio value="mal_id">Mal Id</Radio>
-              <Radio value="episodes">Episodes</Radio>
-              <Radio value="start_date">Start Date</Radio>
-              <Radio value="end_date">End Date</Radio>
-              <Radio value="scored_by">Scored By</Radio>
-            </RadioGroup>
-            <Heading size={"sm"}>Status : </Heading>
-            <RadioGroup name="status" onChange={setStatus} value={status}>
-              <Radio value="not_specified">Not Specified</Radio>
-              <Radio value="airing">Airing</Radio>
-              <Radio value="complete">Complete</Radio>
-              <Radio value="upcoming">Upcoming</Radio>
-            </RadioGroup>
-            <Heading size={"sm"}>Sort : </Heading>
-            <RadioGroup name="sort" onChange={setSort} value={sort}>
-              <Radio value="asc">Asc</Radio>
-              <Radio value="desc">Desc</Radio>
-            </RadioGroup>
-            <Heading size={"sm"}>Type : </Heading>
-            <RadioGroup name="type" onChange={setType} value={type}>
-              <Radio value="all">All</Radio>
-              <Radio value="tv">TV</Radio>
-              <Radio value="movie">Movie</Radio>
-              <Radio value="ova">OVA</Radio>
-              <Radio value="special">Special</Radio>
-              <Radio value="ona">ONA</Radio>
-              <Radio value="music">Music</Radio>
-            </RadioGroup>
-            <Heading size={"sm"}>Adult Content : </Heading>
-            <Switch
-              isChecked={adult ? true : false}
-              onChange={setAdult.toggle}
-            />
-            <Heading size={"sm"}>Limit : </Heading>
-            <Slider
-              id="limit"
-              value={limit}
-              min={0}
-              max={100}
-              step={1}
-              onChange={(event) => setLimit(event)}
-              onMouseEnter={() => setShowTooltip(true)}
-              onMouseLeave={() => setShowTooltip(false)}
+      <Collapse in={isOpen} animateOpacity>
+        <Box boxShadow={"dark-lg"} p={5} borderRadius={5} m={5} width={"80vw"}>
+          <Heading size={"sm"}>Order By :</Heading>
+          <RadioGroup name="order-by" onChange={setOrderBy} value={orderBy}>
+            <Radio value="popularity">Popularity</Radio>
+            <Radio value="rank">Rank</Radio>
+            <Radio value="members">Members</Radio>
+            <Radio value="type">Type</Radio>
+            <Radio value="title">Title</Radio>
+            <Radio value="rating">Rating</Radio>
+            <Radio value="favorites">Favorites</Radio>
+            <Radio value="score">Score</Radio>
+            <Radio value="mal_id">Mal Id</Radio>
+            <Radio value="episodes">Episodes</Radio>
+            <Radio value="start_date">Start Date</Radio>
+            <Radio value="end_date">End Date</Radio>
+            <Radio value="scored_by">Scored By</Radio>
+          </RadioGroup>
+          <Heading size={"sm"}>Status : </Heading>
+          <RadioGroup name="status" onChange={setStatus} value={status}>
+            <Radio value="not_specified">Not Specified</Radio>
+            <Radio value="airing">Airing</Radio>
+            <Radio value="complete">Complete</Radio>
+            <Radio value="upcoming">Upcoming</Radio>
+          </RadioGroup>
+          <Heading size={"sm"}>Sort : </Heading>
+          <RadioGroup name="sort" onChange={setSort} value={sort}>
+            <Radio value="asc">Asc</Radio>
+            <Radio value="desc">Desc</Radio>
+          </RadioGroup>
+          <Heading size={"sm"}>Type : </Heading>
+          <RadioGroup name="type" onChange={setType} value={type}>
+            <Radio value="all">All</Radio>
+            <Radio value="tv">TV</Radio>
+            <Radio value="movie">Movie</Radio>
+            <Radio value="ova">OVA</Radio>
+            <Radio value="special">Special</Radio>
+            <Radio value="ona">ONA</Radio>
+            <Radio value="music">Music</Radio>
+          </RadioGroup>
+          <Heading size={"sm"}>Adult Content : </Heading>
+          <Switch isChecked={adult ? true : false} onChange={setAdult.toggle} />
+          <Heading size={"sm"}>Limit : </Heading>
+          <Slider
+            id="limit"
+            value={limit}
+            min={0}
+            max={100}
+            step={1}
+            onChange={(event) => setLimit(event)}
+            onMouseEnter={() => setShowTooltip(true)}
+            onMouseLeave={() => setShowTooltip(false)}
+          >
+            <SliderTrack>
+              <SliderFilledTrack />
+            </SliderTrack>
+            <Tooltip
+              hasArrow
+              placement="right-end"
+              isOpen={showTooltip}
+              label={`${limit}`}
             >
-              <SliderTrack>
-                <SliderFilledTrack />
-              </SliderTrack>
-              <Tooltip
-                hasArrow
-                placement="right-end"
-                isOpen={showTooltip}
-                label={`${limit}`}
-              >
-                <SliderThumb />
-              </Tooltip>
-            </Slider>
-            <Heading size={"sm"}>Score : ({`${minScore} - ${maxScore}`})</Heading>
-            <RangeSlider
-              defaultValue={[minScore, maxScore]}
-              min={0}
-              max={10}
-              step={0.1}
-              minStepsBetweenThumbs={2}
-              onChange={([minScore, maxScore]) => {
-                setMinScore(minScore)
-                setMaxScore(maxScore)
-              }}
-            >
-              <RangeSliderTrack bg="red.100">
-                <RangeSliderFilledTrack bg={"tomato"} />
-              </RangeSliderTrack>
-              <RangeSliderThumb boxSize={6} index={0} />
-              <RangeSliderThumb boxSize={6} index={1} />
-            </RangeSlider>
-          </ModalBody>
-
-          <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={onClose}>
-              Close
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+              <SliderThumb />
+            </Tooltip>
+          </Slider>
+          <Heading size={"sm"}>Score : ({`${minScore} - ${maxScore}`})</Heading>
+          <RangeSlider
+            defaultValue={[minScore, maxScore]}
+            min={0}
+            max={10}
+            step={0.1}
+            minStepsBetweenThumbs={2}
+            onChange={([minScore, maxScore]) => {
+              setMinScore(minScore);
+              setMaxScore(maxScore);
+            }}
+          >
+            <RangeSliderTrack bg="red.100">
+              <RangeSliderFilledTrack bg={"tomato"} />
+            </RangeSliderTrack>
+            <RangeSliderThumb boxSize={6} index={0} />
+            <RangeSliderThumb boxSize={6} index={1} />
+          </RangeSlider>
+        </Box>
+      </Collapse>
       <Grid templateColumns={gridTemplate} gap={6}>
         {anime.map((data) => {
           return (

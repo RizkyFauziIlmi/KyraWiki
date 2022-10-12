@@ -1,5 +1,5 @@
 import React from "react";
-import { GridItem, Box, Image, Text } from '@chakra-ui/react'
+import { GridItem, Image, Text, Flex } from '@chakra-ui/react'
 import { Link } from "react-router-dom";
 
 export const Result = ({ data }) => {
@@ -10,7 +10,7 @@ export const Result = ({ data }) => {
         textAlign={"center"}
       >
         <Link to={`../../anime/${data.mal_id}`} relative="path">
-          <Box>
+          <Flex flexDir={'column'} alignItems={'center'}>
             <Image
               alt={data.title}
               width={"150px"}
@@ -24,7 +24,7 @@ export const Result = ({ data }) => {
             <Text fontWeight={"bold"} pt={3} fontSize={"sm"}>
               {data.title}
             </Text>
-          </Box>
+          </Flex>
         </Link>
       </GridItem>
     </>
