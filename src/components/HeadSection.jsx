@@ -1,26 +1,27 @@
 import React from "react";
 import {
-    Image,
-    Text,
-    Heading,
-    Flex,
-    HStack,
-    Stat,
-    StatLabel,
-    StatNumber,
-    StatGroup,
-    Divider,
-    Tag,
-    StatArrow,
-    VStack,
-} from "@chakra-ui/react"
+  Image,
+  Text,
+  Heading,
+  Flex,
+  Stat,
+  StatLabel,
+  StatNumber,
+  StatGroup,
+  Divider,
+  Tag,
+  StatArrow,
+  VStack,
+  Grid,
+  GridItem,
+} from "@chakra-ui/react";
 import { StarIcon, ViewIcon } from "@chakra-ui/icons";
 
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
 
 export const HeadSection = ({ datas, target }) => {
   return (
-    <VStack>
+    <VStack overflow={"hidden"}>
       <Link to={target} relative={"path"}>
         <Heading size={"lg"} cursor={"pointer"} textAlign={"center"}>
           {datas.title}
@@ -36,17 +37,19 @@ export const HeadSection = ({ datas, target }) => {
           alt={datas.name}
         />
       </Link>
-      <HStack>
+      <Grid autoFlow={"column"} gap={0.5} alignItems={"center"}>
         {datas.genres.map((genre) => {
           return (
-            <Link to={genre.url} key={genre.name} target={"_blank"}>
-              <Tag size={"sm"} variant="solid" colorScheme="teal">
-                {genre.name}
-              </Tag>
-            </Link>
+            <GridItem key={genre.name}>
+              <Link to={genre.url} target={"_blank"}>
+                <Tag size={"sm"} variant="solid" colorScheme="teal">
+                  {genre.name}
+                </Tag>
+              </Link>
+            </GridItem>
           );
         })}
-      </HStack>
+      </Grid>
       <StatGroup gap={10} textAlign={"center"}>
         <Stat>
           <StatLabel>Score</StatLabel>
