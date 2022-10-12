@@ -44,7 +44,7 @@ export const ImageFlex = ({ datas, url = "anime", title }) => {
             >
               <Image
                 width={"max-content"}
-                height={"200px"}
+                height={"130px"}
                 src={data.images.jpg.image_url}
               />
               <Text fontWeight={"bold"} fontSize={"xs"} textAlign={"center"}>

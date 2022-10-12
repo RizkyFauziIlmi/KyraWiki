@@ -6,7 +6,7 @@ export const TopSection = ({ datas, heading, urlCategory, anime, chara, manga, p
   return (
     <>
       <Heading pt={5}>{heading}</Heading>
-      <Flex>
+      <Flex justifyContent={'center'}>
         {datas.map((data) => {
           return (
             <Link
@@ -16,15 +16,11 @@ export const TopSection = ({ datas, heading, urlCategory, anime, chara, manga, p
               relative={"path"}
             >
               <Image
-                src={data.images.jpg.image_url}
-                transition={"all 0.5s"}
                 width={"max-content"}
-                className="images"
-                borderRadius={"sm"}
-                boxShadow={"xl"}
-                border={"1px solid white"}
+                height={"130px"}
+                src={data.images.jpg.image_url}
               />
-              <Text fontSize={"xx-small"} textAlign={"center"}>
+              <Text fontWeight={"bold"} fontSize={"xs"} textAlign={"center"}>
                 {chara === true ? `${data.name} (${data.name_kanji})` : ""}
                 {anime === true ? `${data.title} (${data.score})` : ""}
                 {manga === true ? `${data.title} (${data.score})` : ""}

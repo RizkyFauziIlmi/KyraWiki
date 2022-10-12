@@ -18,7 +18,7 @@ export const Top = () => {
   }, []);
 
   return (
-    <VStack p={5}>
+    <VStack>
       <TopSection urlCategory={'character'} chara={true} datas={topCharacter} heading={"Top Character"} />
       <TopSection urlCategory={'anime'} anime={true} datas={topAnime} heading={"Top Anime"} />
       <TopSection urlCategory={'manga'} manga={true} datas={topManga} heading={"Top Manga"} />

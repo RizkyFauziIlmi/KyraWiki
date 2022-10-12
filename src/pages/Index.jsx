@@ -1,4 +1,4 @@
-import { Heading, Flex } from '@chakra-ui/react'
+import { Box } from '@chakra-ui/react'
 import React, { useEffect } from 'react'
 import { ImageFlex } from '../components/ImageFlex'
 import { getSchedules, getSeasonNow } from '../utils/fetch'
@@ -9,14 +9,14 @@ export const Index = () => {
   const [newEpisode, setNewEpisode] = React.useState([])
 
   useEffect(() => {
-    getSeasonNow(setSeasonNow, true, 5)
-    getSchedules(setNewEpisode, true, todayString())
+    getSeasonNow(setSeasonNow, false, 5)
+    getSchedules(setNewEpisode, false, todayString())
   }, [])
 
   return (
-    <div>
+    <Box pt={10}>
         <ImageFlex datas={seasonNow} title="This Season" />
         <ImageFlex datas={newEpisode} title="Today Episode" />
-    </div>
+    </Box>
   )
 }
