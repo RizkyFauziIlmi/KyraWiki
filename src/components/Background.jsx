@@ -7,7 +7,7 @@ export const Background = ({ datas }) => {
       <Heading textAlign={"center"} pt={5} size={"md"}>
         Background
       </Heading>
-      <Text textAlign={'center'}>
+      <Text textAlign={'left'}>
         {datas.background === null
           ? "There is No Background"
           : datas.background}
