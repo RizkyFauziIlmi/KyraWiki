@@ -1,10 +1,20 @@
-import { Flex, Heading, Image, Text } from "@chakra-ui/react";
+import { Flex, Heading, Image, Text, useBreakpointValue } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { todayString } from "../utils/todayString";
 
 export const ImageFlex = ({ datas, url = "anime", title }) => {
   const [limiter, setLimiter] = React.useState(3000);
+
+  const height = useBreakpointValue(
+    {
+      base: "130px",
+      md: "300px"
+    },
+    {
+      fallback: 'md'
+    }
+  )
 
   const limiterValue = () => {
     if (todayString() === "sunday") {
@@ -44,7 +54,7 @@ export const ImageFlex = ({ datas, url = "anime", title }) => {
             >
               <Image
                 width={"max-content"}
-                height={"130px"}
+                height={height}
                 src={data.images.jpg.image_url}
               />
               <Text fontWeight={"bold"} fontSize={"xs"} textAlign={"center"}>

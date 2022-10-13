@@ -1,8 +1,18 @@
 import React from "react";
-import { Heading, Flex, Image, Text } from "@chakra-ui/react";
+import { Heading, Flex, Image, Text, useBreakpointValue } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 
 export const TopSection = ({ datas, heading, urlCategory, anime, chara, manga, people }) => {
+  const height = useBreakpointValue(
+    {
+      base: "130px",
+      md: "300px"
+    },
+    {
+      fallback: 'md'
+    }
+  )
+
   return (
     <>
       <Heading pt={5}>{heading}</Heading>
@@ -17,7 +27,7 @@ export const TopSection = ({ datas, heading, urlCategory, anime, chara, manga, p
             >
               <Image
                 width={"max-content"}
-                height={"130px"}
+                height={height}
                 src={data.images.jpg.image_url}
               />
               <Text fontWeight={"bold"} fontSize={"xs"} textAlign={"center"}>
