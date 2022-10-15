@@ -15,8 +15,8 @@ export const Index = () => {
 
   return (
     <Box pt={10}>
-        <ImageFlex datas={seasonNow} title="This Season" />
-        <ImageFlex datas={newEpisode} title="Today Episode" />
+        <ImageFlex datas={seasonNow} title="This Season" linkTitle='/'/>
+        <ImageFlex datas={newEpisode} title="Today Episode" linkTitle='/schedule'/>
     </Box>
   )
 }

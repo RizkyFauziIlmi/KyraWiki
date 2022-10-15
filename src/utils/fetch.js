@@ -2,8 +2,11 @@ import axios from "axios";
 import { todayString } from "./todayString";
 
 export const getTop = async (category = 'characters', set, debug = false) => {
+  const base = "https://api.jikan.moe/v4/top/"
+
+
   const response = await axios.get(
-    `https://api.jikan.moe/v4/top/${category}?limit=5`
+    `${base}${category}?limit=5`
   );
   set(response.data.data);
 };
@@ -44,7 +47,7 @@ export const getSeasonNow = async (set, debug = false, limit = 5) => {
   }
 }
 
-export const getSchedules = async (set, debug = false, day = "unset", limit = -1, rank = false) => {
+export const getSchedules = async (set, debug = false, day = "unset", limit = -1) => {
   const response = await axios.get(`https://api.jikan.moe/v4/schedules?${day === "unset" ? "" : `filter=${day}`}${limit === -1 ? "&limit=" : `&limit=${limit}`}`)
 
   set(response.data.data)

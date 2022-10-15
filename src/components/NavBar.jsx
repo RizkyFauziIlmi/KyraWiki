@@ -84,6 +84,9 @@ export const NavBar = () => {
               <Link to="/top-all">
                 <Button>Top of All</Button>
               </Link>
+              <Link to="/schedule">
+                <Button>Schedule</Button>
+              </Link>
             </Flex>
           </DrawerBody>
 
