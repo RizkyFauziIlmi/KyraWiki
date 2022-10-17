@@ -5,6 +5,7 @@ import {
   Image,
   Text,
   useBreakpointValue,
+  Skeleton,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 
@@ -16,6 +17,7 @@ export const TopSection = ({
   chara,
   manga,
   people,
+  isLoaded
 }) => {
   const height = useBreakpointValue(
     {
@@ -38,12 +40,12 @@ export const TopSection = ({
   const opacity = useBreakpointValue(
     {
       base: "1",
-      md: "0.8"
+      md: "0.8",
     },
     {
-      fallback: "md"
+      fallback: "md",
     }
-  )
+  );
 
   return (
     <>
@@ -62,24 +64,28 @@ export const TopSection = ({
                 justifyContent={"center"}
                 alignItems={"center"}
               >
-                <Image
-                  width={width}
-                  height={height}
-                  src={data.images.jpg.image_url}
-                  opacity={opacity}
-                  _hover={{ opacity: 1 }}
-                />
-                <Text
-                  width={width}
-                  fontWeight={"bold"}
-                  fontSize={"xs"}
-                  textAlign={"center"}
-                >
-                  {chara === true ? `${data.name} (${data.name_kanji})` : ""}
-                  {anime === true ? `${data.title} (${data.score})` : ""}
-                  {manga === true ? `${data.title} (${data.score})` : ""}
-                  {people === true ? `${data.name} (${data.favorites})` : ""}
-                </Text>
+                <Skeleton isLoaded={isLoaded}>
+                  <Image
+                    width={width}
+                    height={height}
+                    src={data.images.jpg.image_url}
+                    opacity={opacity}
+                    _hover={{ opacity: 1 }}
+                  />
+                </Skeleton>
+                <Skeleton mt={1} isLoaded={isLoaded}>
+                  <Text
+                    width={width}
+                    fontWeight={"bold"}
+                    fontSize={"xs"}
+                    textAlign={"center"}
+                  >
+                    {chara === true ? `${data.name} (${data.name_kanji})` : ""}
+                    {anime === true ? `${data.title} (${data.score})` : ""}
+                    {manga === true ? `${data.title} (${data.score})` : ""}
+                    {people === true ? `${data.name} (${data.favorites})` : ""}
+                  </Text>
+                </Skeleton>
               </Flex>
             </Link>
           );

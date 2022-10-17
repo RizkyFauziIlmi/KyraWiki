@@ -16,6 +16,7 @@ import { getSchedules } from "../utils/fetch";
 export const Schedule = () => {
   const [datas, setDatas] = React.useState([]);
   const [day, setDay] = React.useState(new Date().getDay());
+  const [isLoaded, setIsLoaded] = React.useState(false)
 
   const gridTemplate = useBreakpointValue(
     {
@@ -48,7 +49,7 @@ export const Schedule = () => {
   )
 
   useEffect(() => {
-    getSchedules(setDatas, false, customDayString(day), -1);
+    getSchedules(setDatas, false, customDayString(day), -1, setIsLoaded);
   }, [datas, day]);
 
   return (
@@ -78,6 +79,7 @@ export const Schedule = () => {
                 <Result
                   data={data}
                   key={data.synopsis === null ? data.url : data.synopsis}
+                  isLoaded={isLoaded}
                 />
               );
             })}
@@ -90,6 +92,7 @@ export const Schedule = () => {
                 <Result
                   data={data}
                   key={data.synopsis === null ? data.url : data.synopsis}
+                  isLoaded={isLoaded}
                 />
               );
             })}
@@ -102,6 +105,7 @@ export const Schedule = () => {
                 <Result
                   data={data}
                   key={data.synopsis === null ? data.url : data.synopsis}
+                  isLoaded={isLoaded}
                 />
               );
             })}
@@ -114,6 +118,7 @@ export const Schedule = () => {
                 <Result
                   data={data}
                   key={data.synopsis === null ? data.url : data.synopsis}
+                  isLoaded={isLoaded}
                 />
               );
             })}
@@ -126,6 +131,7 @@ export const Schedule = () => {
                 <Result
                   data={data}
                   key={data.synopsis === null ? data.url : data.synopsis}
+                  isLoaded={isLoaded}
                 />
               );
             })}
@@ -138,6 +144,7 @@ export const Schedule = () => {
                 <Result
                   data={data}
                   key={data.synopsis === null ? data.url : data.synopsis}
+                  isLoaded={isLoaded}
                 />
               );
             })}
@@ -150,6 +157,7 @@ export const Schedule = () => {
                 <Result
                   data={data}
                   key={data.synopsis === null ? data.url : data.synopsis}
+                  isLoaded={isLoaded}
                 />
               );
             })}

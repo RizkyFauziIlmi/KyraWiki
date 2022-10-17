@@ -22,6 +22,7 @@ import {
   RangeSliderThumb,
   RangeSliderTrack,
   Collapse,
+  Skeleton,
 } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import { search } from "../utils/fetch";
@@ -42,6 +43,7 @@ export const Search = () => {
   const [maxScore, setMaxScore] = React.useState(10);
   const [status, setStatus] = React.useState("not_specified");
   const { isOpen, onToggle } = useDisclosure();
+  const [isLoaded, setIsLoaded] = React.useState(false);
 
   const gridTemplate = useBreakpointValue(
     {
@@ -56,12 +58,12 @@ export const Search = () => {
   const width = useBreakpointValue(
     {
       base: "80vw",
-      md: "30vw"
+      md: "30vw",
     },
     {
-      fallback: "md"
+      fallback: "md",
     }
-  )
+  );
 
   useEffect(() => {
     search(
@@ -74,16 +76,31 @@ export const Search = () => {
       limit,
       minScore,
       maxScore,
-      status
+      status,
+      false,
+      setIsLoaded
     );
-  }, [adult, limit, maxScore, minScore, orderBy, q, sort, status, type]);
+  }, [
+    adult,
+    isLoaded,
+    limit,
+    maxScore,
+    minScore,
+    orderBy,
+    q,
+    sort,
+    status,
+    type,
+  ]);
 
   return (
     <Box p={5}>
       <Flex justifyContent={"center"} alignItems={"center"} gap={2} pb={2}>
-        <Heading size={"sm"}>
-          ({anime.length + manga.length}) Result for '{q}'{" "}
-        </Heading>
+        <Skeleton isLoaded={isLoaded}>
+          <Heading size={"sm"}>
+            ({anime.length + manga.length}) Result for '{q}'{" "}
+          </Heading>
+        </Skeleton>
         <Button
           size={"sm"}
           onClick={onToggle}
@@ -95,13 +112,7 @@ export const Search = () => {
       </Flex>
       <Collapse in={isOpen} animateOpacity>
         <Flex width={"100%"} justifyContent={"center"}>
-          <Box
-            boxShadow={"dark-lg"}
-            p={5}
-            borderRadius={5}
-            m={5}
-            width={width}
-          >
+          <Box boxShadow={"dark-lg"} p={5} borderRadius={5} m={5} width={width}>
             <Heading size={"sm"}>Order By :</Heading>
             <RadioGroup name="order-by" onChange={setOrderBy} value={orderBy}>
               <Radio value="popularity">Popularity</Radio>
@@ -197,6 +208,7 @@ export const Search = () => {
             <Result
               data={data}
               key={data.synopsis === null ? data.url : data.synopsis}
+              isLoaded={isLoaded}
             />
           );
         })}

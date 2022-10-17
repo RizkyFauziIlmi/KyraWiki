@@ -2,6 +2,8 @@ import {
   Flex,
   Heading,
   Image,
+  Skeleton,
+  SkeletonText,
   Text,
   useBreakpointValue,
 } from "@chakra-ui/react";
@@ -14,6 +16,7 @@ export const ImageFlex = ({
   url = "anime",
   title = "Title",
   linkTitle = "/",
+  isLoaded = false,
 }) => {
   const [limiter, setLimiter] = React.useState(3000);
 
@@ -57,12 +60,12 @@ export const ImageFlex = ({
   const opacity = useBreakpointValue(
     {
       base: "1",
-      md: "0.8"
+      md: "0.8",
     },
     {
-      fallback: "md"
+      fallback: "md",
     }
-  )
+  );
 
   useEffect(() => {
     limiterValue();
@@ -89,21 +92,25 @@ export const ImageFlex = ({
                 justifyContent={"center"}
                 alignItems={"center"}
               >
-                <Image
-                  width={width}
-                  height={height}
-                  src={data.images.jpg.image_url}
-                  opacity={opacity}
-                  _hover={{ opacity: 1 }}
-                />
-                <Text
-                  width={width}
-                  fontWeight={"bold"}
-                  fontSize={"xs"}
-                  textAlign={"center"}
-                >
-                  {data.title}
-                </Text>
+                <Skeleton isLoaded={isLoaded} >
+                  <Image
+                    width={width}
+                    height={height}
+                    src={data.images.jpg.image_url}
+                    opacity={opacity}
+                    _hover={{ opacity: 1 }}
+                  />
+                </Skeleton>
+                <SkeletonText isLoaded={isLoaded} >
+                  <Text
+                    width={width}
+                    fontWeight={"bold"}
+                    fontSize={"xs"}
+                    textAlign={"center"}
+                  >
+                    {data.title}
+                  </Text>
+                </SkeletonText>
               </Flex>
             </Link>
           ) : (

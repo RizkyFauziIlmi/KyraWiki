@@ -19,23 +19,25 @@ import {
   TableContainer,
   Select,
   Avatar,
+  Skeleton,
 } from "@chakra-ui/react";
 import { FaHeart } from "react-icons/fa";
 import { HeadSection } from "../components/HeadSection";
 import { Player } from "../components/Player";
 import { Synopsis } from "../components/Synopsis";
-import { getRandom } from '../utils/fetch'
-import { Link } from 'react-router-dom'
+import { getRandom } from "../utils/fetch";
+import { Link } from "react-router-dom";
 
 export const RandomGenerator = () => {
   const [datas, setDatas] = React.useState();
   const [query, setQuery] = React.useState("anime");
+  const [isLoaded, setIsLoaded] = React.useState(false);
 
   const changeValueOption = () => {
     const select = document.getElementById("select");
     const value = select.options[select.selectedIndex].value;
     setQuery(value);
-    getRandom(query, setDatas)
+    getRandom(query, setDatas);
   };
 
   const showContent = () => {
@@ -44,58 +46,64 @@ export const RandomGenerator = () => {
         return (
           <Flex gap={10} flexDir={window.innerWidth <= 854 ? "column" : "row"}>
             <VStack>
-              <HeadSection datas={datas} target={`../anime/${datas.mal_id}`} />
+              <HeadSection
+                datas={datas}
+                target={`../anime/${datas.mal_id}`}
+                isLoaded={isLoaded}
+              />
             </VStack>
             <Flex flexDir={"column"} width={"100%"}>
-              <Player datas={datas} />
-              <Synopsis datas={datas} />
-              <TableContainer>
-                <Table variant="simple">
-                  <Tbody>
-                    <Tr>
-                      <Td>Type</Td>
-                      <Td>{datas.type}</Td>
-                    </Tr>
-                    <Tr>
-                      <Td>Source</Td>
-                      <Td>{datas.source}</Td>
-                    </Tr>
-                    <Tr>
-                      <Td>Status</Td>
-                      <Td>{datas.status}</Td>
-                    </Tr>
-                    <Tr>
-                      <Td>Episode</Td>
-                      <Td isNumeric>{datas.episodes}</Td>
-                    </Tr>
-                    <Tr>
-                      <Td>Aired From</Td>
-                      <Td isNumeric>
-                        {datas.season === null ? "" : datas.season}{" "}
-                        {new Date(datas.aired.from).getFullYear()}
-                      </Td>
-                    </Tr>
-                    <Tr>
-                      <Td>Studios</Td>
-                      <Td>
-                        {datas.studios.map((studio) => {
-                          return (
-                            <Link to={studio.url} key={studio.name}>
-                              <Tag
-                                size="lg"
-                                colorScheme="red"
-                                borderRadius="full"
-                              >
-                                <TagLabel>{studio.name}</TagLabel>
-                              </Tag>
-                            </Link>
-                          );
-                        })}
-                      </Td>
-                    </Tr>
-                  </Tbody>
-                </Table>
-              </TableContainer>
+              <Player datas={datas} isLoaded={isLoaded} />
+              <Synopsis datas={datas} isLoaded={isLoaded} />
+              <Skeleton isLoaded={isLoaded}>
+                <TableContainer>
+                  <Table variant="simple">
+                    <Tbody>
+                      <Tr>
+                        <Td>Type</Td>
+                        <Td>{datas.type}</Td>
+                      </Tr>
+                      <Tr>
+                        <Td>Source</Td>
+                        <Td>{datas.source}</Td>
+                      </Tr>
+                      <Tr>
+                        <Td>Status</Td>
+                        <Td>{datas.status}</Td>
+                      </Tr>
+                      <Tr>
+                        <Td>Episode</Td>
+                        <Td isNumeric>{datas.episodes}</Td>
+                      </Tr>
+                      <Tr>
+                        <Td>Aired From</Td>
+                        <Td isNumeric>
+                          {datas.season === null ? "" : datas.season}{" "}
+                          {new Date(datas.aired.from).getFullYear()}
+                        </Td>
+                      </Tr>
+                      <Tr>
+                        <Td>Studios</Td>
+                        <Td>
+                          {datas.studios.map((studio) => {
+                            return (
+                              <Link to={studio.url} key={studio.name}>
+                                <Tag
+                                  size="lg"
+                                  colorScheme="red"
+                                  borderRadius="full"
+                                >
+                                  <TagLabel>{studio.name}</TagLabel>
+                                </Tag>
+                              </Link>
+                            );
+                          })}
+                        </Td>
+                      </Tr>
+                    </Tbody>
+                  </Table>
+                </TableContainer>
+              </Skeleton>
             </Flex>
           </Flex>
         );
@@ -109,30 +117,38 @@ export const RandomGenerator = () => {
             flexDir={window.innerWidth <= 854 ? "column" : "row"}
           >
             <VStack>
-              <HeadSection datas={datas} target={`../manga/${datas.mal_id}`} />
-              <Synopsis datas={datas}/>
-              <TableContainer>
-                <Table variant="simple">
-                  <Tbody>
-                    <Tr>
-                      <Td>Type</Td>
-                      <Td>{datas.type}</Td>
-                    </Tr>
-                    <Tr>
-                      <Td>Status</Td>
-                      <Td>{datas.status}</Td>
-                    </Tr>
-                    <Tr>
-                      <Td>Chapters</Td>
-                      <Td>{datas.chapters === null ? "-" : datas.chapters}</Td>
-                    </Tr>
-                    <Tr>
-                      <Td>Volumes</Td>
-                      <Td>{datas.volumes === null ? "-" : datas.volumes}</Td>
-                    </Tr>
-                  </Tbody>
-                </Table>
-              </TableContainer>
+              <HeadSection
+                datas={datas}
+                target={`../manga/${datas.mal_id}`}
+                isLoaded={isLoaded}
+              />
+              <Synopsis datas={datas} isLoaded={isLoaded} />
+              <Skeleton isLoaded={isLoaded}>
+                <TableContainer>
+                  <Table variant="simple">
+                    <Tbody>
+                      <Tr>
+                        <Td>Type</Td>
+                        <Td>{datas.type}</Td>
+                      </Tr>
+                      <Tr>
+                        <Td>Status</Td>
+                        <Td>{datas.status}</Td>
+                      </Tr>
+                      <Tr>
+                        <Td>Chapters</Td>
+                        <Td>
+                          {datas.chapters === null ? "-" : datas.chapters}
+                        </Td>
+                      </Tr>
+                      <Tr>
+                        <Td>Volumes</Td>
+                        <Td>{datas.volumes === null ? "-" : datas.volumes}</Td>
+                      </Tr>
+                    </Tbody>
+                  </Table>
+                </TableContainer>
+              </Skeleton>
             </VStack>
           </Flex>
         );
@@ -146,7 +162,7 @@ export const RandomGenerator = () => {
             flexDir={window.innerWidth <= 854 ? "column" : "row"}
           >
             <VStack>
-              <Link relative="path" to={`../character/${datas.mal_id}`} >
+              <Link relative="path" to={`../character/${datas.mal_id}`}>
                 <Heading size={"md"} cursor={"pointer"} textAlign={"center"}>
                   {datas.name}
                 </Heading>
@@ -184,7 +200,10 @@ export const RandomGenerator = () => {
                     <Tr>
                       <Td>Kanji Name</Td>
                       <Td>
-                        <Link to={`../character/${datas.mal_id}`} relative="path">
+                        <Link
+                          to={`../character/${datas.mal_id}`}
+                          relative="path"
+                        >
                           <Tag size="lg" colorScheme="red" borderRadius="full">
                             <Avatar
                               src={datas.images.jpg.image_url}
@@ -345,9 +364,7 @@ export const RandomGenerator = () => {
         );
       }
     } else {
-        return(
-            <Heading>Weabo Generator</Heading>
-        )
+      return <Heading>Weabo Generator</Heading>;
     }
   };
 
@@ -362,7 +379,9 @@ export const RandomGenerator = () => {
     >
       {showContent()}
       <Flex gap={1}>
-        <Button onClick={() => getRandom(query, setDatas)}>Generate</Button>
+        <Button onClick={() => getRandom(query, setDatas, false, setIsLoaded)}>
+          Generate
+        </Button>
         <Select
           id="select"
           onChange={changeValueOption}
