@@ -45,6 +45,16 @@ export const ImageFlex = ({
     }
   };
 
+  const width = useBreakpointValue(
+    {
+      base: "20vw",
+      md: "15vw",
+    },
+    {
+      fallback: "md",
+    }
+  );
+
   useEffect(() => {
     limiterValue();
   }, []);
@@ -65,13 +75,22 @@ export const ImageFlex = ({
               relative="path"
               key={data.synopsis === null ? data.url : data.synopsis}
             >
-              <Flex flexDir={'column'} justifyContent={'center'} alignItems={'center'}>
+              <Flex
+                flexDir={"column"}
+                justifyContent={"center"}
+                alignItems={"center"}
+              >
                 <Image
-                  width={"15vw"}
+                  width={width}
                   height={height}
                   src={data.images.jpg.image_url}
                 />
-                <Text width={'15vw'} fontWeight={"bold"} fontSize={"xs"} textAlign={"center"}>
+                <Text
+                  width={width}
+                  fontWeight={"bold"}
+                  fontSize={"xs"}
+                  textAlign={"center"}
+                >
                   {data.title}
                 </Text>
               </Flex>
