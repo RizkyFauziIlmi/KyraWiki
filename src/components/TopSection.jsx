@@ -35,6 +35,15 @@ export const TopSection = ({
       fallback: "md",
     }
   );
+  const opacity = useBreakpointValue(
+    {
+      base: "1",
+      md: "0.8"
+    },
+    {
+      fallback: "md"
+    }
+  )
 
   return (
     <>
@@ -57,6 +66,8 @@ export const TopSection = ({
                   width={width}
                   height={height}
                   src={data.images.jpg.image_url}
+                  opacity={opacity}
+                  _hover={{ opacity: 1 }}
                 />
                 <Text
                   width={width}

@@ -54,6 +54,15 @@ export const ImageFlex = ({
       fallback: "md",
     }
   );
+  const opacity = useBreakpointValue(
+    {
+      base: "1",
+      md: "0.8"
+    },
+    {
+      fallback: "md"
+    }
+  )
 
   useEffect(() => {
     limiterValue();
@@ -84,6 +93,8 @@ export const ImageFlex = ({
                   width={width}
                   height={height}
                   src={data.images.jpg.image_url}
+                  opacity={opacity}
+                  _hover={{ opacity: 1 }}
                 />
                 <Text
                   width={width}
