@@ -9,7 +9,12 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { todayString } from "../utils/todayString";
 
-export const ImageFlex = ({ datas, url = "anime", title = "Title", linkTitle = "/" }) => {
+export const ImageFlex = ({
+  datas,
+  url = "anime",
+  title = "Title",
+  linkTitle = "/",
+}) => {
   const [limiter, setLimiter] = React.useState(3000);
 
   const height = useBreakpointValue(
@@ -60,14 +65,16 @@ export const ImageFlex = ({ datas, url = "anime", title = "Title", linkTitle = "
               relative="path"
               key={data.synopsis === null ? data.url : data.synopsis}
             >
-              <Image
-                width={"max-content"}
-                height={height}
-                src={data.images.jpg.image_url}
-              />
-              <Text fontWeight={"bold"} fontSize={"xs"} textAlign={"center"}>
-                {data.title}
-              </Text>
+              <Flex flexDir={'column'} justifyContent={'center'} alignItems={'center'}>
+                <Image
+                  width={"15vw"}
+                  height={height}
+                  src={data.images.jpg.image_url}
+                />
+                <Text width={'15vw'} fontWeight={"bold"} fontSize={"xs"} textAlign={"center"}>
+                  {data.title}
+                </Text>
+              </Flex>
             </Link>
           ) : (
             ""
