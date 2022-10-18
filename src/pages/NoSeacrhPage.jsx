@@ -12,6 +12,7 @@ export const NoSeacrhPage = () => {
                 title: "No Search Keyword",
                 description: "please enter keyword",
                 status: "error",
+                isClosable: true,
                 colorScheme: "red"
             })
         }

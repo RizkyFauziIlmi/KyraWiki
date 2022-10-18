@@ -15,6 +15,12 @@ import {
   DrawerCloseButton,
   Button,
   InputGroup,
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  AccordionIcon,
+  Box,
   InputRightElement,
 } from "@chakra-ui/react";
 import { MoonIcon, SunIcon, HamburgerIcon, SearchIcon } from "@chakra-ui/icons";
@@ -26,7 +32,7 @@ export const NavBar = () => {
   const { isOpen, onClose, onOpen } = useDisclosure();
   const btnRef = React.useRef();
   const [q, setQ] = React.useState("");
-  const searchRef = useRef(null)
+  const searchRef = useRef(null);
 
   const changeValue = (event) => {
     setQ(event.target.value);
@@ -39,10 +45,9 @@ export const NavBar = () => {
   };
 
   useEffect(() => {
-    window.addEventListener('keydown', keyboardHandle)
-    return () => window.removeEventListener('keydown', keyboardHandle)
+    window.addEventListener("keydown", keyboardHandle);
+    return () => window.removeEventListener("keydown", keyboardHandle);
   }, []);
-
 
   return (
     <Flex boxShadow={"dark-lg"} p={5} alignItems={"center"} gap={2}>
@@ -74,23 +79,68 @@ export const NavBar = () => {
           <DrawerHeader>Menu</DrawerHeader>
 
           <DrawerBody>
-            <Flex flexDir={"column"} gap={2}>
-              <Link to="anime-ranking">
-                <Button>Anime Ranking</Button>
-              </Link>
-              <Link to="/random-generator">
-                <Button>Random Generator</Button>
-              </Link>
-              <Link to="/anime-recommendation">
-                <Button>Anime Recommendation</Button>
-              </Link>
-              <Link to="/top-all">
-                <Button>Top of All</Button>
-              </Link>
-              <Link to="/schedule">
-                <Button>Schedule</Button>
-              </Link>
-            </Flex>
+            <Accordion>
+              <AccordionItem>
+                <h2>
+                  <AccordionButton>
+                    <Box flex="1" textAlign="left">
+                      Ranking
+                    </Box>
+                    <AccordionIcon />
+                  </AccordionButton>
+                </h2>
+                <AccordionPanel pb={4}>
+                  <Link to="/ranking">
+                    <Button>All Ranking</Button>
+                  </Link>
+                  <Link to="ranking/anime">
+                    <Button>Anime Ranking</Button>
+                  </Link>
+                  <Link to="ranking/manga">
+                    <Button>Manga Ranking</Button>
+                  </Link>
+                  <Link to="ranking/characters">
+                    <Button>Characters Ranking</Button>
+                  </Link>
+                  <Link to="ranking/people">
+                    <Button>People Ranking</Button>
+                  </Link>
+                </AccordionPanel>
+              </AccordionItem>
+              <AccordionItem>
+                <h2>
+                  <AccordionButton>
+                    <Box flex="1" textAlign="left">
+                      Tools
+                    </Box>
+                    <AccordionIcon />
+                  </AccordionButton>
+                </h2>
+                <AccordionPanel pb={4}>
+                  <Link to="/anime-recommendation">
+                    <Button>Anime Recommendation</Button>
+                  </Link>
+                  <Link to="/schedule">
+                    <Button>Schedule</Button>
+                  </Link>
+                </AccordionPanel>
+              </AccordionItem>
+              <AccordionItem>
+                <h2>
+                  <AccordionButton>
+                    <Box flex="1" textAlign="left">
+                      Other
+                    </Box>
+                    <AccordionIcon />
+                  </AccordionButton>
+                </h2>
+                <AccordionPanel pb={4}>
+                  <Link to="/random-generator">
+                    <Button>Random Generator</Button>
+                  </Link>
+                </AccordionPanel>
+              </AccordionItem>
+            </Accordion>
           </DrawerBody>
 
           <DrawerFooter></DrawerFooter>

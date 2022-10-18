@@ -6,8 +6,10 @@ import {
   Text,
   useBreakpointValue,
   Skeleton,
+  StatDownArrow,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 export const TopSection = ({
   datas,
@@ -17,7 +19,7 @@ export const TopSection = ({
   chara,
   manga,
   people,
-  isLoaded
+  isLoaded,
 }) => {
   const height = useBreakpointValue(
     {
@@ -49,7 +51,21 @@ export const TopSection = ({
 
   return (
     <>
-      <Heading pt={5}>{heading}</Heading>
+      <Link
+        to={
+          urlCategory === "character"
+            ? `../ranking/${urlCategory}s`
+            : `../ranking/${urlCategory}`
+        }
+        relative="path"
+      >
+        <Flex pt={5} gap={2} alignItems={"center"}>
+          <Heading>{heading}</Heading>
+          <motion.div whileInView={{ rotate: "-90deg" }}>
+            <StatDownArrow />
+          </motion.div>
+        </Flex>
+      </Link>
       <Flex justifyContent={"center"}>
         {datas.map((data) => {
           return (
