@@ -13,6 +13,7 @@ import { Index } from './pages/Index';
 import { Character } from './pages/Character';
 import { NoSeacrhPage } from './pages/NoSeacrhPage';
 import { Schedule } from './pages/Schedule';
+import { AnimeRanking } from './pages/AnimeRanking';
 
 
 const App = () => {
@@ -32,6 +33,7 @@ const App = () => {
           <Route path='/manga/:id' element={<Manga  />}/>
           <Route path='/character/:id' element={<Character />} />
           <Route path='/schedule' element={<Schedule />}  />
+          <Route path='/anime-ranking' element={<AnimeRanking />} />
         </Routes>
       </BrowserRouter>
     </ChakraProvider>

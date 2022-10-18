@@ -1,12 +1,15 @@
 import axios from "axios";
 import { todayString } from "./todayString";
 
-export const getTop = async (category = 'characters', set, debug = false, setLoading) => {
+export const getTop = async (category = 'characters', set, debug = false, setLoading, limit = 5) => {
   await axios.get(
-    `https://api.jikan.moe/v4/top/${category}?limit=5`
+    `https://api.jikan.moe/v4/top/${category}?limit=${limit}`
   )
     .then((response) => {
       set(response.data.data);
+      if (debug) {
+        console.log(response.data.data)
+      }
       setTimeout(() => {
         setLoading(true)
       })

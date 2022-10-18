@@ -75,6 +75,9 @@ export const NavBar = () => {
 
           <DrawerBody>
             <Flex flexDir={"column"} gap={2}>
+              <Link to="anime-ranking">
+                <Button>Anime Ranking</Button>
+              </Link>
               <Link to="/random-generator">
                 <Button>Random Generator</Button>
               </Link>
