@@ -19,7 +19,7 @@ import {
 export const Ranking = ({ datas, isLoaded }) => {
     const width = useBreakpointValue(
         {
-            base: "80vw",
+            base: "70vw",
             md: " 40vw"
         },
         {
@@ -36,6 +36,25 @@ export const Ranking = ({ datas, isLoaded }) => {
             fallback: "md"
         }
     )
+
+    const gap = useBreakpointValue(
+        {
+            base: 5,
+            md: 10
+        },
+        {
+            fallback: "md"
+        }
+    )
+    const fontSize = useBreakpointValue(
+        {
+            base: "xx-small",
+            md: "lg"
+        },
+        {
+            fallback: "md"
+        }
+    )
   return (
     <Flex flexDir={"column"} gap={1} overflow={"hidden"}>
       <Heading textAlign={"center"} mt={20} mb={10}>
@@ -43,7 +62,7 @@ export const Ranking = ({ datas, isLoaded }) => {
       </Heading>
       {datas.map((data, index) => {
         return (
-          <Flex p={5} gap={10} justifyContent={"center"} alignItems={"center"}>
+          <Flex p={5} gap={gap} justifyContent={"center"} alignItems={"center"}>
             <SkeletonText isLoaded={isLoaded}>
               <Heading size={"md"}>
                 {index + 1 === 1 ? (
@@ -84,9 +103,9 @@ export const Ranking = ({ datas, isLoaded }) => {
                         src={data.images.jpg.image_url}
                       />
                     </motion.div>
-                    <Text fontWeight={"bold"} fontSize={'sm'}>{data.title}</Text>
+                    <Text fontWeight={"bold"} fontSize={fontSize} textAlign={'left'}>{data.title}</Text>
                     <Flex alignItems={"center"}>
-                      <Text fontWeight={"bold"} fontSize={"md"}>
+                      <Text fontWeight={"bold"} fontSize={'sm'}>
                         {data.score === null ? "-" : `${data.score}/`}
                       </Text>
                       <Text
