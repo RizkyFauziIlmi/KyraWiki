@@ -78,7 +78,7 @@ export const Ranking = ({ datas, isLoaded, category = "" }) => {
       <Heading textAlign={"center"} mt={20} mb={10}>
         {category.charAt(0).toUpperCase() + category.slice(1) + " Ranking"}
       </Heading>
-      <Flex justifyContent={"center"} alignItems={"center"} gap={5} p={2}>
+      <Flex justifyContent={"center"} alignItems={"center"} gap={4}>
         <Link
           to={`../${
             relation[currentIndex > 0 ? currentIndex - 1 : currentIndex]
@@ -93,7 +93,7 @@ export const Ranking = ({ datas, isLoaded, category = "" }) => {
         {relation.map((value, index) => {
           if (value === category) {
             return (
-              <Text fontWeight={"bold"} as={"u"}>
+              <Text fontWeight={"bold"} as={"u"} fontSize={'sm'}>
                 {value.toUpperCase()}
               </Text>
             );
@@ -105,7 +105,7 @@ export const Ranking = ({ datas, isLoaded, category = "" }) => {
                 onClick={() => setCurrentIndex(index)}
               >
                 <motion.div whileHover={{ scale: 1.2 }}>
-                  <Text>{value}</Text>
+                  <Text fontSize={'sm'}>{value}</Text>
                 </motion.div>
               </Link>
             );
