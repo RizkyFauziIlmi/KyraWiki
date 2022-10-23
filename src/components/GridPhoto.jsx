@@ -11,13 +11,14 @@ import {
   Image,
   Skeleton,
   Text,
-  useBreakpointValue,
+  useBreakpointValue, 
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 
 export const GridPhoto = ({ query = "https://api.jikan.moe/v4/seasons/now", reverse = false, title = "" }) => {
   const [datas, setDatas] = React.useState([]);
   const [isLoaded, setIsLoaded] = React.useState(false);
+  const imageRef = React.useRef(null)
 
   const gridTemplate = useBreakpointValue(
     {
@@ -28,6 +29,16 @@ export const GridPhoto = ({ query = "https://api.jikan.moe/v4/seasons/now", reve
       fallback: "md",
     }
   );
+
+  const heightImage = useBreakpointValue(
+    {
+        base: "25vh",
+        md: "45vh"
+    },
+    {
+        fallback: "md"
+    }
+  )
 
   useEffect(() => {
     const getApi = async () => {
@@ -47,34 +58,31 @@ export const GridPhoto = ({ query = "https://api.jikan.moe/v4/seasons/now", reve
             console.log(error);
           });
       };
-
     getApi();
   }, [query, reverse]);
 
   return (
-    <Flex justifyContent={"center"} width={'100%'} overflow={'hidden'} flexDir={"column"} alignItems={"center"}>
+    <Flex textAlign={'center'} justifyContent={"center"} width={'100%'} overflow={'hidden'} flexDir={"column"} alignItems={"center"}>
       <Heading textTransform={"uppercase"}>{title}</Heading>
-      <Grid gridTemplateColumns={gridTemplate} gap={6}>
+      <Grid gridTemplateColumns={gridTemplate} gap={6} p={2}>
         {datas.map((data, index) => {
           return (
             <GridItem key={index}>
               <Skeleton isLoaded={isLoaded}>
                 <Box
-                  textAlign={"center"}
-                  maxW={"15vw"}
                   borderWidth="1px"
-                  borderRadius="lg"
                   overflow="hidden"
+                  maxWidth={imageRef.current === null ? "20vw" : imageRef.current.clientWidth} 
                 >
                   <Link to={`../anime/${data.mal_id}`} relative="path">
                     <Image
-                      height={"20vw"}
-                      minWidth={"15vw"}
+                      height={heightImage}
                       src={data.images.jpg.image_url}
+                      ref={imageRef}
                     />
                     <Heading
                       fontSize={"md"}
-                      maxW={"15vw"}
+                      maxWidth={imageRef.current === null ? "20vw" : imageRef.current.clientWidth}
                       wordBreak={"break-word"}
                     >
                       {data.title}
@@ -86,6 +94,7 @@ export const GridPhoto = ({ query = "https://api.jikan.moe/v4/seasons/now", reve
                     justifyContent={"center"}
                     overflow={"hidden"}
                     gap={1}
+                    maxWidth={imageRef.current === null ? "20vw" : imageRef.current.clientWidth}
                   >
                     {data.genres.map((genre, index) => {
                       return <Badge key={index}>{genre.name}</Badge>;

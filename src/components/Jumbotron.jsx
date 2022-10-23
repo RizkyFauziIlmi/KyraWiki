@@ -26,7 +26,7 @@ export const Jumbotron = () => {
   }, [])
 
   return (
-    <Flex alignItems={"center"} pb={20}>
+    <Flex alignItems={"center"} pb={20} textAlign={"center"}>
       <Skeleton isLoaded={isLoaded}>
         <Flex position={"relative"}>
           {datas.map((data, index) => {
@@ -52,7 +52,7 @@ export const Jumbotron = () => {
               Get New Update About Anime and Manga
             </Text>
             <Link to={'/ranking'}>
-              <Button colorScheme={"yellow"} size={'md'}>EXPLORE NOW</Button>
+              <Button colorScheme={"yellow"} size={'xs'}>EXPLORE NOW</Button>
             </Link>
           </Flex>
         </Flex>
