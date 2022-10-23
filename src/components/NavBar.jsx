@@ -79,7 +79,7 @@ export const NavBar = () => {
           <DrawerHeader>Menu</DrawerHeader>
 
           <DrawerBody>
-            <Accordion>
+            <Accordion defaultIndex={0}>
               <AccordionItem>
                 <h2>
                   <AccordionButton>
@@ -91,19 +91,19 @@ export const NavBar = () => {
                 </h2>
                 <AccordionPanel pb={4}>
                   <Link to="/ranking">
-                    <Button>All Ranking</Button>
+                    <Button variant={'ghost'}>All Ranking</Button>
                   </Link>
                   <Link to="ranking/anime">
-                    <Button>Anime Ranking</Button>
+                    <Button variant={'ghost'}>Anime Ranking</Button>
                   </Link>
                   <Link to="ranking/manga">
-                    <Button>Manga Ranking</Button>
+                    <Button variant={'ghost'}>Manga Ranking</Button>
                   </Link>
                   <Link to="ranking/characters">
-                    <Button>Characters Ranking</Button>
+                    <Button variant={'ghost'}>Characters Ranking</Button>
                   </Link>
                   <Link to="ranking/people">
-                    <Button>People Ranking</Button>
+                    <Button variant={'ghost'}>People Ranking</Button>
                   </Link>
                 </AccordionPanel>
               </AccordionItem>
@@ -118,10 +118,10 @@ export const NavBar = () => {
                 </h2>
                 <AccordionPanel pb={4}>
                   <Link to="/anime-recommendation">
-                    <Button>Anime Recommendation</Button>
+                    <Button variant={'ghost'}>Anime Recommendation</Button>
                   </Link>
                   <Link to="/schedule">
-                    <Button>Schedule</Button>
+                    <Button variant={'ghost'}>Schedule</Button>
                   </Link>
                 </AccordionPanel>
               </AccordionItem>
@@ -136,7 +136,7 @@ export const NavBar = () => {
                 </h2>
                 <AccordionPanel pb={4}>
                   <Link to="/random-generator">
-                    <Button>Random Generator</Button>
+                    <Button variant={'ghost'}>Random Generator</Button>
                   </Link>
                 </AccordionPanel>
               </AccordionItem>

@@ -3,7 +3,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 import { NavBar } from './components/NavBar';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { RandomGenerator } from './pages/RandomGenerator';
-import { AnimeRecommendations } from './pages/AnimeRecommendations';
+import { ThisSeason } from './pages/ThisSeason';
 import { Search } from './pages/Search';
 import { Anime } from './pages/Anime';
 import { Manga } from './pages/Manga';
@@ -29,7 +29,7 @@ const App = () => {
           <Route path='/' element={<Index />} />
           <Route path='/ranking' element={<Top />} />
           <Route path='/random-generator' element={<RandomGenerator />} />
-          <Route path='/anime-recommendation' element={<AnimeRecommendations />} />
+          <Route path='/this-season' element={<ThisSeason />} />
           <Route path='/search' element={<NoSeacrhPage />} />
           <Route path='/search/:q' element={<Search  />}/>
           <Route path='/anime/:id' element={<Anime  />}/>

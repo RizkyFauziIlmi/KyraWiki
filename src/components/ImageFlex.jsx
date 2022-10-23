@@ -4,21 +4,46 @@ import {
   Image,
   Skeleton,
   SkeletonText,
+  StatDownArrow,
   Text,
   useBreakpointValue,
 } from "@chakra-ui/react";
+import axios from "axios";
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { todayString } from "../utils/todayString";
+import { motion } from "framer-motion";
 
 export const ImageFlex = ({
-  datas,
+  query = "",
   url = "anime",
   title = "Title",
   linkTitle = "/",
-  isLoaded = false,
+  reverse = false,
 }) => {
-  const [limiter, setLimiter] = React.useState(3000);
+  const [datas, setDatas] = React.useState([]);
+  const [isLoaded, setIsLoaded] = React.useState(false);
+
+  const getSeasonNow = async () => {
+    await axios
+      .get(query)
+      .then((response) => {
+        if (reverse) {
+          setDatas(response.data.data.reverse().slice(0, 5));
+        } else {
+          setDatas(response.data.data);
+        }
+        setTimeout(() => {
+          setIsLoaded(true);
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    getSeasonNow();
+  });
 
   const height = useBreakpointValue(
     {
@@ -29,24 +54,6 @@ export const ImageFlex = ({
       fallback: "md",
     }
   );
-
-  const limiterValue = () => {
-    if (todayString() === "sunday") {
-      setLimiter(3000);
-    } else if (todayString() === "monday") {
-      setLimiter(14500);
-    } else if (todayString() === "teusday") {
-      setLimiter(13000);
-    } else if (todayString() === "wednesday") {
-      setLimiter(3000);
-    } else if (todayString() === "thursday") {
-      setLimiter(12000);
-    } else if (todayString() === "friday") {
-      setLimiter(7000);
-    } else if (todayString() === "other") {
-      setLimiter(14500);
-    }
-  };
 
   const width = useBreakpointValue(
     {
@@ -67,20 +74,19 @@ export const ImageFlex = ({
     }
   );
 
-  useEffect(() => {
-    limiterValue();
-  }, []);
-
   return (
     <>
       <Link to={linkTitle}>
-        <Heading textAlign={"center"} pb={3}>
-          {title}
-        </Heading>
+        <Flex p={5} gap={2} alignItems={"center"} justifyContent={"center"} >
+          <Heading>{title}</Heading>
+          <motion.div whileInView={{ rotate: '-90deg' }}>
+            <StatDownArrow />
+          </motion.div>
+        </Flex>
       </Link>
       <Flex justifyContent={"center"}>
         {datas.map((data) => {
-          return data.rank <= limiter && data.rank !== 0 ? (
+          return (
             <Link
               className="link"
               to={`../${url}/${data.mal_id}`}
@@ -92,7 +98,7 @@ export const ImageFlex = ({
                 justifyContent={"center"}
                 alignItems={"center"}
               >
-                <Skeleton isLoaded={isLoaded} >
+                <Skeleton isLoaded={isLoaded}>
                   <Image
                     width={width}
                     height={height}
@@ -101,7 +107,7 @@ export const ImageFlex = ({
                     _hover={{ opacity: 1 }}
                   />
                 </Skeleton>
-                <SkeletonText isLoaded={isLoaded} >
+                <SkeletonText isLoaded={isLoaded}>
                   <Text
                     width={width}
                     fontWeight={"bold"}
@@ -113,8 +119,6 @@ export const ImageFlex = ({
                 </SkeletonText>
               </Flex>
             </Link>
-          ) : (
-            ""
           );
         })}
       </Flex>

@@ -1,7 +1,5 @@
 import React from "react";
-import { useEffect } from "react";
 import {
-  Grid,
   Box,
   useBreakpointValue,
   Heading,
@@ -22,17 +20,13 @@ import {
   RangeSliderThumb,
   RangeSliderTrack,
   Collapse,
-  Skeleton,
 } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
-import { search } from "../utils/fetch";
 import { SettingsIcon } from "@chakra-ui/icons";
 import { Result } from "../components/Result";
 
 export const Search = () => {
   const { q } = useParams();
-  const [anime, setAnime] = React.useState([]);
-  const [manga, setManga] = React.useState([]);
   const [orderBy, setOrderBy] = React.useState("popularity");
   const [adult, setAdult] = useBoolean(false);
   const [sort, setSort] = React.useState("asc");
@@ -43,17 +37,6 @@ export const Search = () => {
   const [maxScore, setMaxScore] = React.useState(10);
   const [status, setStatus] = React.useState("not_specified");
   const { isOpen, onToggle } = useDisclosure();
-  const [isLoaded, setIsLoaded] = React.useState(false);
-
-  const gridTemplate = useBreakpointValue(
-    {
-      base: "repeat(2, 1fr)",
-      md: "repeat(6, 1fr)",
-    },
-    {
-      fallback: "md",
-    }
-  );
 
   const width = useBreakpointValue(
     {
@@ -65,42 +48,9 @@ export const Search = () => {
     }
   );
 
-  useEffect(() => {
-    search(
-      q,
-      setAnime,
-      adult,
-      orderBy,
-      sort,
-      type,
-      limit,
-      minScore,
-      maxScore,
-      status,
-      false,
-      setIsLoaded
-    );
-  }, [
-    adult,
-    isLoaded,
-    limit,
-    maxScore,
-    minScore,
-    orderBy,
-    q,
-    sort,
-    status,
-    type,
-  ]);
-
   return (
     <Box p={5}>
       <Flex justifyContent={"center"} alignItems={"center"} gap={2} pb={2}>
-        <Skeleton isLoaded={isLoaded}>
-          <Heading size={"sm"}>
-            ({anime.length + manga.length}) Result for '{q}'{" "}
-          </Heading>
-        </Skeleton>
         <Button
           size={"sm"}
           onClick={onToggle}
@@ -202,25 +152,17 @@ export const Search = () => {
           </Box>
         </Flex>
       </Collapse>
-      <Grid templateColumns={gridTemplate} gap={6}>
-        {anime.map((data) => {
-          return (
-            <Result
-              data={data}
-              key={data.synopsis === null ? data.url : data.synopsis}
-              isLoaded={isLoaded}
-            />
-          );
-        })}
-        {manga.map((data) => {
-          return (
-            <Result
-              data={data}
-              key={data.synopsis === null ? data.url : data.synopsis}
-            />
-          );
-        })}
-      </Grid>
+      <Result
+        query={q}
+        adult={adult}
+        limit={limit}
+        type={type}
+        order_by={orderBy}
+        sort={sort}
+        status={status}
+        min_score={minScore}
+        max_score={maxScore}
+      />
     </Box>
   );
 };
