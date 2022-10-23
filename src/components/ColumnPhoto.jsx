@@ -12,10 +12,13 @@ import React from "react";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import moment from 'moment'
 
 export const ColumnPhoto = () => {
   const [datas, setDatas] = React.useState([]);
   const [isLoaded, setIsLoaded] = React.useState(false);
+
+    const now = moment(new Date())
 
   const flexDir = useBreakpointValue(
     {
@@ -109,6 +112,7 @@ export const ColumnPhoto = () => {
                         {data.type} | {data.rating}
                       </Text>
                       <Text>Source: {data.source}</Text>
+                      <Text fontWeight={'bold'}>{now.to(data.aired.from).toLowerCase() === "invalid date" ? "" : new Date(data.aired.from).toDateString()} {now.to(data.aired.from).toUpperCase()}</Text>
                     </Flex>
                   </Flex>
                 </Skeleton>

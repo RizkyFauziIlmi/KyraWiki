@@ -11,11 +11,18 @@ import {
   Image,
   Skeleton,
   Text,
-  useBreakpointValue, 
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
-export const GridPhoto = ({ query = "https://api.jikan.moe/v4/seasons/now", reverse = false, title = "", column = 2, subTitle = "" }) => {
+export const GridPhoto = ({
+  query = "https://api.jikan.moe/v4/seasons/now",
+  reverse = false,
+  title = "",
+  column = 2,
+  subTitle = "",
+}) => {
   const [datas, setDatas] = React.useState([]);
   const [isLoaded, setIsLoaded] = React.useState(false);
 
@@ -31,56 +38,72 @@ export const GridPhoto = ({ query = "https://api.jikan.moe/v4/seasons/now", reve
 
   const heightImage = useBreakpointValue(
     {
-        base: "35vh",
-        md: "50vh"
+      base: "35vh",
+      md: "50vh",
     },
     {
-        fallback: "md"
+      fallback: "md",
     }
-  )
+  );
 
   useEffect(() => {
     const getApi = async () => {
-        await axios
-          .get(query)
-          .then((response) => {
-            if (reverse) {
-                setDatas(response.data.data.reverse());
-            } else {
-                setDatas(response.data.data);
-            }
-            setTimeout(() => {
-              setIsLoaded(true);
-            });
-          })
-          .catch((error) => {
-            console.log(error);
+      await axios
+        .get(query)
+        .then((response) => {
+          if (reverse) {
+            setDatas(response.data.data.reverse());
+          } else {
+            setDatas(response.data.data);
+          }
+          setTimeout(() => {
+            setIsLoaded(true);
           });
-      };
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
     getApi();
   }, [query, reverse]);
 
   return (
-    <Flex textAlign={'center'} justifyContent={"center"} width={'100%'} overflow={'hidden'} flexDir={"column"} alignItems={"center"}>
-      <Heading textTransform={"uppercase"}>{title}{subTitle}</Heading>
+    <Flex
+      textAlign={"center"}
+      justifyContent={"center"}
+      width={"100%"}
+      overflow={"hidden"}
+      flexDir={"column"}
+      alignItems={"center"}
+    >
+      <Heading textTransform={"uppercase"}>
+        {title}
+        {subTitle}
+      </Heading>
       <Grid gridTemplateColumns={gridTemplate} gap={6} p={2}>
         {datas.map((data, index) => {
           return (
             <GridItem key={index}>
               <Skeleton isLoaded={isLoaded}>
                 <Box
-                  borderWidth="1px"
-                  overflow="hidden" 
+                  boxShadow={"2xl"}
+                  p={2}
+                  overflow="hidden"
+                  width={"fit-content"}
                 >
                   <Link to={`../anime/${data.mal_id}`} relative="path">
-                    <Image
-                      height={heightImage}
-                      width={'100%'}
-                      src={data.images.jpg.image_url}
-                    />
+                    <motion.div whileHover={{ scale: 1.02 }}>
+                      <Image
+                        borderRadius={"5px"}
+                        border={"1px solid black"}
+                        width={"150px"}
+                        height={"200px"}
+                        src={data.images.jpg.image_url}
+                      />
+                    </motion.div>
                     <Heading
                       fontSize={"md"}
-
+                      width={"150px"}
                       wordBreak={"break-word"}
                     >
                       {data.title}
@@ -92,12 +115,13 @@ export const GridPhoto = ({ query = "https://api.jikan.moe/v4/seasons/now", reve
                     justifyContent={"center"}
                     overflow={"hidden"}
                     gap={1}
+                    width={"150px"}
                   >
                     {data.genres.map((genre, index) => {
                       return <Badge key={index}>{genre.name}</Badge>;
                     })}
                   </Flex>
-                  <Text>{data.broadcast.string}</Text>
+                  <Text width={"150px"}>{data.broadcast.string}</Text>
                   {}
                 </Box>
               </Skeleton>
