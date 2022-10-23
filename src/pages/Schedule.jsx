@@ -5,14 +5,17 @@ import {
   TabPanel,
   TabPanels,
   Tabs,
+  Text,
   useBreakpointValue,
 } from "@chakra-ui/react";
 import React from "react";
+import { useEffect } from "react";
 import { GridPhoto } from "../components/GridPhoto";
 import { customDayString } from "../utils/customDayString";
 
 export const Schedule = () => {
   const [day, setDay] = React.useState(new Date().getDay());
+  const [clock, setClock] = React.useState("")
 
 
   const orientaion = useBreakpointValue(
@@ -35,11 +38,22 @@ export const Schedule = () => {
     }
   );
 
+  const clockRefresh = () => {
+    setInterval(() => {
+      setClock(new Date().toLocaleString("en-US", { timeZone: "Asia/Tokyo", dateStyle: "full", timeStyle:  "full" }))
+    }, 1000)
+  }
+
+  useEffect(() => {
+    clockRefresh()
+  }, [])
+
   return (
     <>
       <Heading textTransform={"uppercase"} textAlign={"center"}>
-        Schedule
+        Schedule 
       </Heading>
+      <Text textAlign={'center'} fontWeight={'bold'} opacity={0.8} >{clock}</Text>
       <Tabs
         pt={5}
         align={align}
@@ -65,6 +79,7 @@ export const Schedule = () => {
                 day
               )}`}
               reverse={true}
+              column={1}
             />
           </TabPanel>
           <TabPanel>
@@ -73,6 +88,7 @@ export const Schedule = () => {
                 day
               )}`}
               reverse={true}
+              column={1}
             />
           </TabPanel>
           <TabPanel>
@@ -81,6 +97,7 @@ export const Schedule = () => {
                 day
               )}`}
               reverse={true}
+              column={1}
             />
           </TabPanel>
           <TabPanel>
@@ -89,6 +106,7 @@ export const Schedule = () => {
                 day
               )}`}
               reverse={true}
+              column={1}
             />
           </TabPanel>
           <TabPanel>
@@ -97,6 +115,7 @@ export const Schedule = () => {
                 day
               )}`}
               reverse={true}
+              column={1}
             />
           </TabPanel>
           <TabPanel>
@@ -105,6 +124,7 @@ export const Schedule = () => {
                 day
               )}`}
               reverse={true}
+              column={1}
             />
           </TabPanel>
           <TabPanel>
@@ -113,6 +133,7 @@ export const Schedule = () => {
                 day
               )}`}
               reverse={true}
+              column={1}
             />
           </TabPanel>
         </TabPanels>

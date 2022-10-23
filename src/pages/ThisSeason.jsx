@@ -3,7 +3,9 @@ import { GridPhoto } from "../components/GridPhoto";
 
 export const ThisSeason = () => {
   return (
-    <GridPhoto query="https://api.jikan.moe/v4/seasons/now" title="this season" /> 
+    <>
+    <GridPhoto query="https://api.jikan.moe/v4/seasons/now" title="this season" subTitle={` (${new Date().getFullYear()})`} /> 
+    </>
   )
 }
 

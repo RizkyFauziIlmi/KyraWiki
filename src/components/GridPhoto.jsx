@@ -15,13 +15,13 @@ import {
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 
-export const GridPhoto = ({ query = "https://api.jikan.moe/v4/seasons/now", reverse = false, title = "" }) => {
+export const GridPhoto = ({ query = "https://api.jikan.moe/v4/seasons/now", reverse = false, title = "", column = 2, subTitle = "" }) => {
   const [datas, setDatas] = React.useState([]);
   const [isLoaded, setIsLoaded] = React.useState(false);
 
   const gridTemplate = useBreakpointValue(
     {
-      base: "repeat(2, 1fr)",
+      base: `repeat(${column}, 1fr)`,
       md: "repeat(5, 1fr)",
     },
     {
@@ -31,8 +31,8 @@ export const GridPhoto = ({ query = "https://api.jikan.moe/v4/seasons/now", reve
 
   const heightImage = useBreakpointValue(
     {
-        base: "25vh",
-        md: "45vh"
+        base: "35vh",
+        md: "50vh"
     },
     {
         fallback: "md"
@@ -62,7 +62,7 @@ export const GridPhoto = ({ query = "https://api.jikan.moe/v4/seasons/now", reve
 
   return (
     <Flex textAlign={'center'} justifyContent={"center"} width={'100%'} overflow={'hidden'} flexDir={"column"} alignItems={"center"}>
-      <Heading textTransform={"uppercase"}>{title}</Heading>
+      <Heading textTransform={"uppercase"}>{title}{subTitle}</Heading>
       <Grid gridTemplateColumns={gridTemplate} gap={6} p={2}>
         {datas.map((data, index) => {
           return (
