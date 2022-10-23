@@ -26,6 +26,26 @@ export const ColumnPhoto = () => {
       fallback: "md",
     }
   );
+  
+  const textAlign = useBreakpointValue(
+    {
+        base: "center",
+        md: "left"
+    },
+    {
+        fallback: "md"
+    }
+  )
+
+  const alignSelf = useBreakpointValue(
+    {
+        base: "center",
+        md: "flex-start"
+    },
+    {
+        fallback: "md"
+    }
+  )
 
   const getUpcoming = async () => {
     await axios
@@ -78,9 +98,9 @@ export const ColumnPhoto = () => {
                         alt={data.title}
                       />
                     </Link>
-                    <Flex flexDir={"column"} p={2} placeSelf={"center"}>
+                    <Flex flexDir={"column"} p={2} placeSelf={alignSelf}>
                       <Link to={`/anime/${data.mal_id}`} relative="path">
-                        <Text fontWeight={"bold"} textAlign={"center"}>
+                        <Text fontWeight={"bold"} textAlign={textAlign}>
                           {data.title}
                         </Text>
                       </Link>
