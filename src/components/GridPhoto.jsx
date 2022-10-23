@@ -18,7 +18,6 @@ import { Link } from "react-router-dom";
 export const GridPhoto = ({ query = "https://api.jikan.moe/v4/seasons/now", reverse = false, title = "" }) => {
   const [datas, setDatas] = React.useState([]);
   const [isLoaded, setIsLoaded] = React.useState(false);
-  const imageRef = React.useRef(null)
 
   const gridTemplate = useBreakpointValue(
     {
@@ -71,18 +70,17 @@ export const GridPhoto = ({ query = "https://api.jikan.moe/v4/seasons/now", reve
               <Skeleton isLoaded={isLoaded}>
                 <Box
                   borderWidth="1px"
-                  overflow="hidden"
-                  maxWidth={imageRef.current === null ? "20vw" : imageRef.current.clientWidth} 
+                  overflow="hidden" 
                 >
                   <Link to={`../anime/${data.mal_id}`} relative="path">
                     <Image
                       height={heightImage}
+                      width={'100%'}
                       src={data.images.jpg.image_url}
-                      ref={imageRef}
                     />
                     <Heading
                       fontSize={"md"}
-                      maxWidth={imageRef.current === null ? "20vw" : imageRef.current.clientWidth}
+
                       wordBreak={"break-word"}
                     >
                       {data.title}
@@ -94,7 +92,6 @@ export const GridPhoto = ({ query = "https://api.jikan.moe/v4/seasons/now", reve
                     justifyContent={"center"}
                     overflow={"hidden"}
                     gap={1}
-                    maxWidth={imageRef.current === null ? "20vw" : imageRef.current.clientWidth}
                   >
                     {data.genres.map((genre, index) => {
                       return <Badge key={index}>{genre.name}</Badge>;
