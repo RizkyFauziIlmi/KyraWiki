@@ -1,5 +1,4 @@
 import {
-  Grid,
   Heading,
   Tab,
   TabList,
@@ -15,15 +14,6 @@ import { customDayString } from "../utils/customDayString";
 export const Schedule = () => {
   const [day, setDay] = React.useState(new Date().getDay());
 
-  const gridTemplate = useBreakpointValue(
-    {
-      base: "repeat(2, 1fr)",
-      md: "repeat(5, 1fr)",
-    },
-    {
-      fallback: "md",
-    }
-  );
 
   const orientaion = useBreakpointValue(
     {

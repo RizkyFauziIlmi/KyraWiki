@@ -21,7 +21,7 @@ export const GridPhoto = ({ query = "https://api.jikan.moe/v4/seasons/now", reve
 
   const gridTemplate = useBreakpointValue(
     {
-      base: "repeat(1, 1fr)",
+      base: "repeat(2, 1fr)",
       md: "repeat(5, 1fr)",
     },
     {

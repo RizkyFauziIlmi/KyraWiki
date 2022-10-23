@@ -47,12 +47,12 @@ export const Jumbotron = () => {
             left={"50%"}
             transform={"translate(-50%, -50%)"}
           >
-            <Heading size={"2xl"}>KYRAWIKI</Heading>
-            <Text fontSize={"sm"} opacity={0.8}>
+            <Heading size={"lg"}>KYRAWIKI</Heading>
+            <Text fontSize={"xs"} opacity={0.8}>
               Get New Update About Anime and Manga
             </Text>
             <Link to={'/ranking'}>
-              <Button colorScheme={"yellow"}>EXPLORE NOW</Button>
+              <Button colorScheme={"yellow"} size={'md'}>EXPLORE NOW</Button>
             </Link>
           </Flex>
         </Flex>
