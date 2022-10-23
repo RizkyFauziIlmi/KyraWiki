@@ -88,7 +88,7 @@ export const ColumnPhoto = () => {
                     p={2}
                     flexBasis={"auto"}
                   >
-                    <Text fontWeight={"bold"} p={2} width={"10%"}>
+                    <Text fontWeight={"bold"} p={2} width={"max-content"}>
                       {index + 1}
                     </Text>
                     <Link to={`/anime/${data.mal_id}`} relative="path">
