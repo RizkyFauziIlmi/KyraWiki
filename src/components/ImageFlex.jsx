@@ -23,27 +23,27 @@ export const ImageFlex = ({
   const [datas, setDatas] = React.useState([]);
   const [isLoaded, setIsLoaded] = React.useState(false);
 
-  const getSeasonNow = async () => {
-    await axios
-      .get(query)
-      .then((response) => {
-        if (reverse) {
-          setDatas(response.data.data.reverse().slice(0, 5));
-        } else {
-          setDatas(response.data.data);
-        }
-        setTimeout(() => {
-          setIsLoaded(true);
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
   useEffect(() => {
+    const getSeasonNow = async () => {
+      await axios
+        .get(query)
+        .then((response) => {
+          if (reverse) {
+            setDatas(response.data.data.reverse().slice(0, 5));
+          } else {
+            setDatas(response.data.data);
+          }
+          setTimeout(() => {
+            setIsLoaded(true);
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+
     getSeasonNow();
-  });
+  }, [query, reverse]);
 
   const height = useBreakpointValue(
     {
