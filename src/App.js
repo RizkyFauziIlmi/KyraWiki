@@ -16,6 +16,9 @@ import { Schedule } from './pages/Schedule';
 import { RankingPage } from './pages/RankingPage'
 import { CurrentPath } from './components/CurrentPath';
 import { NotFoundPage } from './pages/NotFoundPage';
+import { Profile } from './pages/Profile';
+import { Login } from './pages/Login';
+import { Register } from './pages/Register';
 
 
 const App = () => {
@@ -37,6 +40,9 @@ const App = () => {
           <Route path='/character/:id' element={<Character />} />
           <Route path='/schedule' element={<Schedule />}  />
           <Route path='/ranking/:category' element={<RankingPage />} />
+          <Route path='/profile' element={<Profile />} />
+          <Route path='/register' element={<Register />}/>
+          <Route path='/login' element={<Login />} />
           <Route path='*' element={<NotFoundPage />}/>
         </Routes>
       </BrowserRouter>

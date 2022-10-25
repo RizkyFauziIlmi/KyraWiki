@@ -8,7 +8,6 @@ import {
   useDisclosure,
   Drawer,
   DrawerBody,
-  DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
   DrawerContent,
@@ -26,6 +25,8 @@ import {
 import { MoonIcon, SunIcon, HamburgerIcon, SearchIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
 import { useEffect, useRef } from "react";
+import { UserLog } from "./UserLog";
+
 
 export const NavBar = () => {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -79,6 +80,7 @@ export const NavBar = () => {
           <DrawerHeader>Menu</DrawerHeader>
 
           <DrawerBody>
+            <UserLog close={onClose}/> 
             <Accordion defaultIndex={0}>
               <AccordionItem>
                 <h2>
@@ -142,8 +144,6 @@ export const NavBar = () => {
               </AccordionItem>
             </Accordion>
           </DrawerBody>
-
-          <DrawerFooter></DrawerFooter>
         </DrawerContent>
       </Drawer>
     </Flex>
