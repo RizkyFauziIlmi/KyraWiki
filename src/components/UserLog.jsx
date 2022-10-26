@@ -5,27 +5,14 @@ import {
   Button,
   Flex,
   Text,
-  useToast,
 } from "@chakra-ui/react";
 import React from "react";
 import { auth } from "../firebase/firebase-config";
-import { signOut } from "firebase/auth";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { LogoutButton } from "./LogoutButton";
 
 export const UserLog = ({ close }) => {
-  const navigate = useNavigate();
-  const toast = useToast();
 
-  const logOut = async () => {
-    await signOut(auth).then(() => {
-      toast({
-        title: "Success Logout",
-        status: "success",
-        isClosable: true,
-      });
-      navigate("/");
-    });
-  };
 
   return auth.currentUser === null ? (
     <Flex alignItems={"center"} justifyContent={"space-between"} p={2}>
@@ -59,10 +46,7 @@ export const UserLog = ({ close }) => {
         <Link to={"/login"} onClick={close}>
           <Button size={"sm"}>Login</Button>
         </Link>
-        <Button size={"sm"} onClick={() => {
-          logOut()
-          close()
-        }}>Logout</Button>
+        <LogoutButton seconAction={close}/>
       </Flex>
     </Flex>
   );

@@ -19,6 +19,7 @@ import { NotFoundPage } from './pages/NotFoundPage';
 import { Profile } from './pages/Profile';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
+import { Favorite } from './pages/Favorite';
 
 
 const App = () => {
@@ -43,6 +44,7 @@ const App = () => {
           <Route path='/profile' element={<Profile />} />
           <Route path='/register' element={<Register />}/>
           <Route path='/login' element={<Login />} />
+          <Route path='/favorites' element={<Favorite />} />
           <Route path='*' element={<NotFoundPage />}/>
         </Routes>
       </BrowserRouter>

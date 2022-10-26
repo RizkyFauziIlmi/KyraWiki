@@ -135,7 +135,12 @@ export const OtherSection = ({ datas, isLoaded }) => {
         <UnorderedList>
           {datas.titles.map((value) => {
             return (
-              <SkeletonText mt={1} noOfLines={1} isLoaded={isLoaded} key={value.title}>
+              <SkeletonText
+                mt={1}
+                noOfLines={1}
+                isLoaded={isLoaded}
+                key={value.title}
+              >
                 <ListItem>
                   <Text
                     fontSize={"xs"}

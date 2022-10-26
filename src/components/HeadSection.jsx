@@ -9,6 +9,7 @@ import {
   StatNumber,
   StatGroup,
   Divider,
+  useToast,
   Tag,
   StatArrow,
   VStack,
@@ -16,12 +17,40 @@ import {
   GridItem,
   Skeleton,
   SkeletonText,
+  Button,
 } from "@chakra-ui/react";
 import { StarIcon, ViewIcon } from "@chakra-ui/icons";
-
-import { Link } from "react-router-dom";
+import { FcLikePlaceholder } from "react-icons/fc";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { arrayUnion, doc, updateDoc } from "firebase/firestore";
+import { auth, db } from "../firebase/firebase-config";
+import { motion } from "framer-motion";
 
 export const HeadSection = ({ datas, target, isLoaded }) => {
+  const { id } = useParams();
+  const toast = useToast();
+  const navigate = useNavigate();
+
+  const updateFavoriteList = async () => {
+    if (auth.currentUser !== null) {
+      await updateDoc(
+        doc(db, "infoAccount", localStorage.getItem("email")),
+        {
+          favorites: arrayUnion({ status: true, mal_id: `${id}` }),
+        }
+      ).then(() => {
+        toast({
+          status: "success",
+          title: "Added Successfully",
+          description: `${datas.title} added to favorite list`,
+          isClosable: true,
+        });
+      });
+    } else {
+      navigate("/login");
+    }
+  };
+
   return (
     <VStack overflow={"hidden"}>
       <Link to={target} relative={"path"}>
@@ -116,6 +145,17 @@ export const HeadSection = ({ datas, target, isLoaded }) => {
         </Stat>
       </StatGroup>
       <Divider />
+      <Flex gap={1} justifyContent={"center"}>
+        <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+          <Button
+            leftIcon={<FcLikePlaceholder />}
+            size={"sm"}
+            onClick={updateFavoriteList}
+          >
+            Favorite
+          </Button>
+        </motion.button>
+      </Flex>
     </VStack>
   );
 };

@@ -12,10 +12,11 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
 import React from "react";
 import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router-dom";
-import { auth, provider } from "../firebase/firebase-config";
+import { auth, db, provider } from "../firebase/firebase-config";
 
 export const Register = () => {
   const navigate = useNavigate();
@@ -27,18 +28,17 @@ export const Register = () => {
 
   const createAccount = async () => {
     try {
-      const result = await createUserWithEmailAndPassword(
+      await createUserWithEmailAndPassword(
         auth,
         email,
         password
-      );
+      )
       toast({
         title: "Success Create an Account",
         status: "success",
         isClosable: true,
       });
       navigate("/login");
-      console.log(result);
     } catch (error) {
       toast({
         title: "Register Failed",
@@ -46,6 +46,19 @@ export const Register = () => {
         status: "error",
         isClosable: true,
       });
+    }
+    if (
+      auth.currentUser.metadata.creationTime ===
+      auth.currentUser.metadata.lastSignInTime
+    ) {
+      await setDoc(doc(db, "infoAccount", auth.currentUser.email), {
+        favorites: [],
+        wacthing: [],
+        completed: [],
+      });
+      console.log(auth.currentUser.metadata.creationTime, auth.currentUser.metadata.lastSignInTime,": baru")
+    } else {
+      console.log(auth.currentUser.metadata.creationTime, auth.currentUser.metadata.lastSignInTime,": lama")
     }
   };
 

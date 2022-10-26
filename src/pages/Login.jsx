@@ -11,11 +11,12 @@ import {
   Text,
   useToast,
 } from "@chakra-ui/react";
-import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
 import React from "react";
-import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router-dom";
-import { auth, provider } from "../firebase/firebase-config";
+import { GoogleLoginButton } from "../components/GoogleLoginButton";
+import { auth, db } from "../firebase/firebase-config";
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -24,18 +25,8 @@ export const Login = () => {
   const [email, setEmail] = React.useState("");
   const [password, setpassword] = React.useState("");
 
-  const loginWithGoogle = async () => {
-    await signInWithPopup(auth, provider).then(() => {
-      toast({
-        title: "Success Login",
-        status: "success",
-        isClosable: true,
-      });
-      navigate("/profile");
-    });
-  };
-
-  const loginwithEmail = async () => {
+  const loginwithEmail = async (e) => {
+    e.preventDefault()
     try {
       await signInWithEmailAndPassword(auth, email, password);
       toast({
@@ -43,7 +34,14 @@ export const Login = () => {
         status: "success",
         isClosable: true,
       });
-      navigate("/profile");
+      await setDoc(doc(db, "infoAccount", email), {
+          favorites: [],
+          wacthing: [],
+          completed: []
+      }).finally(() => {
+        localStorage.setItem("email", email)
+        navigate("/profile");
+      })
     } catch (error) {
       toast({
         title: "Login Failed",
@@ -90,9 +88,7 @@ export const Login = () => {
           </InputGroup>
           <Button onClick={loginwithEmail} width={'100%'} mt={2}>Login</Button>
           <Text fontWeight={'bold'} textAlign={'center'}>-OR-</Text>
-          <Button leftIcon={<FcGoogle />} onClick={loginWithGoogle} width={'100%'}>
-          Login With Google
-        </Button>
+          <GoogleLoginButton />
         </FormControl>
         <Flex gap={1} flexDir={'column'} justifyContent={'center'} alignItems={'center'}>
           <Text textAlign={"center"} opacity={0.5}>

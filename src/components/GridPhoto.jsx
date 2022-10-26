@@ -36,16 +36,6 @@ export const GridPhoto = ({
     }
   );
 
-  const heightImage = useBreakpointValue(
-    {
-      base: "35vh",
-      md: "50vh",
-    },
-    {
-      fallback: "md",
-    }
-  );
-
   useEffect(() => {
     const getApi = async () => {
       await axios
