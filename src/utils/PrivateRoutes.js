@@ -10,8 +10,9 @@ export const PrivateRoutes = () => {
         if (auth.currentUser === null) {
             toast({
                 title: "401 Unauthorized",
-                status: "error",
-                description: "login to use this feature"
+                status: "warning",
+                description: "login to use this feature",
+                isClosable: true
             })
         }
     }, [toast])

@@ -47,8 +47,9 @@ export const HeadSection = ({ datas, target, isLoaded }) => {
       navigate("/login");
       toast({
         title: "401 Unauthorized",
-        status: "error",
+        status: "warning",
         description: "login to use this feature",
+        isClosable: true
       });
     }
   };

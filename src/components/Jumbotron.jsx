@@ -1,4 +1,4 @@
-import { Button, Flex, Heading, Image, Skeleton, Text } from "@chakra-ui/react";
+import { Button, Flex, Heading, Image, Skeleton, Text, useToast } from "@chakra-ui/react";
 import axios from "axios";
 import React from "react";
 import { useEffect } from "react";
@@ -7,23 +7,28 @@ import { Link } from "react-router-dom";
 export const Jumbotron = () => {
   const [datas, setDatas] = React.useState([])
   const [isLoaded, setIsLoaded] = React.useState(false)
-
-  const getTopCharacter = async () => {
-    await axios.get("https://api.jikan.moe/v4/top/characters?limit=5")
-    .then((response) => {
-      setDatas(response.data.data)
-      setTimeout(() => {
-        setIsLoaded(true)
-      })
-    })
-    .catch((error) => {
-      console.log(error)
-    })
-  }
+  const toast = useToast()
 
   useEffect(() => {
+    const getTopCharacter = async () => {
+      await axios.get("https://api.jikan.moe/v4/top/characters?limit=5")
+      .then((response) => {
+        setDatas(response.data.data)
+        setTimeout(() => {
+          setIsLoaded(true)
+        })
+      })
+      .catch((error) => {
+        toast({
+          title: "400 Bad Request",
+          status: "error",
+          description: error.message
+        })
+      })
+    }
+
     getTopCharacter()
-  }, [])
+  }, [toast])
 
   return (
     <Flex alignItems={"center"} pb={20} textAlign={"center"}>

@@ -56,10 +56,7 @@ export const Register = () => {
         wacthing: [],
         completed: [],
       });
-      console.log(auth.currentUser.metadata.creationTime, auth.currentUser.metadata.lastSignInTime,": baru")
-    } else {
-      console.log(auth.currentUser.metadata.creationTime, auth.currentUser.metadata.lastSignInTime,": lama")
-    }
+    } 
   };
 
   const loginWithGoogle = async () => {

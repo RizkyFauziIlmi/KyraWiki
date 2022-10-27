@@ -12,6 +12,7 @@ import {
   Skeleton,
   Text,
   useBreakpointValue,
+  useToast,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -25,6 +26,7 @@ export const GridPhoto = ({
 }) => {
   const [datas, setDatas] = React.useState([]);
   const [isLoaded, setIsLoaded] = React.useState(false);
+  const toast = useToast()
 
   const gridTemplate = useBreakpointValue(
     {
@@ -51,11 +53,15 @@ export const GridPhoto = ({
           });
         })
         .catch((error) => {
-          console.log(error);
+          toast({
+            title: "400 Bad Request",
+            status: "error",
+            description: error.message
+          })
         });
     };
     getApi();
-  }, [query, reverse]);
+  }, [query, reverse, toast]);
 
   return (
     <Flex

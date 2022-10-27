@@ -7,6 +7,7 @@ import {
   StatDownArrow,
   Text,
   useBreakpointValue,
+  useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useEffect } from "react";
@@ -22,6 +23,7 @@ export const ImageFlex = ({
 }) => {
   const [datas, setDatas] = React.useState([]);
   const [isLoaded, setIsLoaded] = React.useState(false);
+  const toast = useToast()
 
   useEffect(() => {
     const getSeasonNow = async () => {
@@ -38,12 +40,16 @@ export const ImageFlex = ({
           });
         })
         .catch((error) => {
-          console.log(error);
+          toast({
+            title: "400 Bad Request",
+            status: "error",
+            description: error.message
+          })
         });
     };
 
     getSeasonNow();
-  }, [query, reverse]);
+  }, [query, reverse, toast]);
 
   const height = useBreakpointValue(
     {

@@ -49,7 +49,11 @@ export const Favorite = () => {
             setFavoriteList((arr) => [...arr, response.data.data]);
           })
           .catch((error) => {
-            console.log(error.message);
+            toast({
+              title: "400 Bad Request",
+              status: "error",
+              description: error.message
+            })
           });
       });
     };
@@ -57,9 +61,8 @@ export const Favorite = () => {
     if (user && !fireLoading) {
       setFavoriteList([]);
       getFavoriteList();
-      console.log("exe");
     }
-  }, [fireLoading, user, value]);
+  }, [fireLoading, toast, user, value]);
 
   const deleteTargetFavorite = async (mal_id, name) => {
     await updateDoc(doc(db, "infoAccount", localStorage.getItem("email")), {

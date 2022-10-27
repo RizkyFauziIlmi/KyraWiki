@@ -6,6 +6,7 @@ import {
   Skeleton,
   Text,
   useBreakpointValue,
+  useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
 import React from "react";
@@ -17,6 +18,7 @@ import moment from 'moment'
 export const ColumnPhoto = () => {
   const [datas, setDatas] = React.useState([]);
   const [isLoaded, setIsLoaded] = React.useState(false);
+  const toast = useToast()
 
     const now = moment(new Date())
 
@@ -50,6 +52,8 @@ export const ColumnPhoto = () => {
     }
   )
 
+  useEffect(() => {
+    
   const getUpcoming = async () => {
     await axios
       .get("https://api.jikan.moe/v4/seasons/upcoming")
@@ -60,13 +64,16 @@ export const ColumnPhoto = () => {
         });
       })
       .catch((error) => {
-        console.log(error);
+        toast({
+          title: "400 Bad Request",
+          status: "error",
+          description: error.message
+        })
       });
   };
 
-  useEffect(() => {
     getUpcoming();
-  }, []);
+  }, [toast]);
 
   return (
     <>

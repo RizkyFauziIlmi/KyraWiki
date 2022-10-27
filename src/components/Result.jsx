@@ -8,6 +8,7 @@ import {
   Grid,
   useBreakpointValue,
   Heading,
+  useToast,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -26,6 +27,7 @@ export const Result = ({
 }) => {
   const [datas, setDatas] = React.useState([]);
   const [isLoaded, setIsLoaded] = React.useState(false);
+  const toast = useToast()
 
   const gridTemplate = useBreakpointValue(
     {
@@ -56,12 +58,16 @@ export const Result = ({
           });
         })
         .catch((error) => {
-          console.log(error);
+          toast({
+            title: "400 Bad request",
+            status: "error",
+            description: error.message
+          })
         });
     };
 
     search();
-  }, [adult, limit, max_score, min_score, order_by, query, sort, status, type]);
+  }, [adult, limit, max_score, min_score, order_by, query, sort, status, toast, type]);
 
   return (
     <Flex flexDir={'column'}>

@@ -22,7 +22,6 @@ import {
   Collapse,
 } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
-import { SettingsIcon } from "@chakra-ui/icons";
 import { Result } from "../components/Result";
 import { FcFilledFilter } from "react-icons/fc";
 
