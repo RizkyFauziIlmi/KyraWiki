@@ -30,7 +30,7 @@ export const Login = () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       toast({
-        title: "Success Login",
+        title: "Login Successful",
         status: "success",
         isClosable: true,
       });

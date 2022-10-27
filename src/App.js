@@ -20,6 +20,7 @@ import { Profile } from './pages/Profile';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
 import { Favorite } from './pages/Favorite';
+import { PrivateRoutes } from './utils/PrivateRoutes';
 
 
 const App = () => {
@@ -30,22 +31,24 @@ const App = () => {
         <NavBar />
         <CurrentPath />
         <Routes>
-          <Route path='/' element={<Index />} />
+          <Route path='/' element={<Index />} exact />
           <Route path='/ranking' element={<Top />} />
           <Route path='/random-generator' element={<RandomGenerator />} />
           <Route path='/this-season' element={<ThisSeason />} />
           <Route path='/search' element={<NoSeacrhPage />} />
-          <Route path='/search/:q' element={<Search  />}/>
-          <Route path='/anime/:id' element={<Anime  />}/>
-          <Route path='/manga/:id' element={<Manga  />}/>
+          <Route path='/search/:q' element={<Search />} />
+          <Route path='/anime/:id' element={<Anime />} />
+          <Route path='/manga/:id' element={<Manga />} />
           <Route path='/character/:id' element={<Character />} />
-          <Route path='/schedule' element={<Schedule />}  />
+          <Route path='/schedule' element={<Schedule />} />
           <Route path='/ranking/:category' element={<RankingPage />} />
-          <Route path='/profile' element={<Profile />} />
-          <Route path='/register' element={<Register />}/>
+          <Route element={<PrivateRoutes />}>
+            <Route path='/profile' element={<Profile />} />
+            <Route path='/favorites' element={<Favorite />} />
+          </Route>
+          <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
-          <Route path='/favorites' element={<Favorite />} />
-          <Route path='*' element={<NotFoundPage />}/>
+          <Route path='*' element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>
     </ChakraProvider>

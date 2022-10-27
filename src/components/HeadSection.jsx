@@ -33,12 +33,9 @@ export const HeadSection = ({ datas, target, isLoaded }) => {
 
   const updateFavoriteList = async () => {
     if (auth.currentUser !== null) {
-      await updateDoc(
-        doc(db, "infoAccount", localStorage.getItem("email")),
-        {
-          favorites: arrayUnion({ status: true, mal_id: `${id}` }),
-        }
-      ).then(() => {
+      await updateDoc(doc(db, "infoAccount", localStorage.getItem("email")), {
+        favorites: arrayUnion({ status: true, mal_id: `${id}` }),
+      }).then(() => {
         toast({
           status: "success",
           title: "Added Successfully",
@@ -48,6 +45,11 @@ export const HeadSection = ({ datas, target, isLoaded }) => {
       });
     } else {
       navigate("/login");
+      toast({
+        title: "401 Unauthorized",
+        status: "error",
+        description: "login to use this feature",
+      });
     }
   };
 
@@ -146,15 +148,20 @@ export const HeadSection = ({ datas, target, isLoaded }) => {
       </StatGroup>
       <Divider />
       <Flex gap={1} justifyContent={"center"}>
-        <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-          <Button
-            leftIcon={<FcLikePlaceholder />}
-            size={"sm"}
-            onClick={updateFavoriteList}
+        <Skeleton isLoaded={isLoaded}>
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
-            Favorite
-          </Button>
-        </motion.button>
+            <Button
+              leftIcon={<FcLikePlaceholder />}
+              size={"sm"}
+              onClick={updateFavoriteList}
+            >
+              Favorite
+            </Button>
+          </motion.button>
+        </Skeleton>
       </Flex>
     </VStack>
   );

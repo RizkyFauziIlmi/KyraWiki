@@ -14,7 +14,7 @@ export const GoogleLoginButton = () => {
     await signInWithPopup(auth, provider)
       .then(() => {
         toast({
-          title: "Success Login",
+          title: "Login Successful",
           status: "success",
           isClosable: true,
         });
@@ -32,9 +32,6 @@ export const GoogleLoginButton = () => {
           wacthing: [],
           completed: [],
         });
-        console.log("baru")
-      } else {
-        console.log("lama")
       }
   };
   return (
