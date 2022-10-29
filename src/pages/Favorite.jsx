@@ -113,11 +113,11 @@ export const Favorite = () => {
           </span>
         )}
         {value && (
-          <Grid templateColumns={gridTemplate} gap={5} p={5}>
+          <Grid templateColumns={gridTemplate} gap={'1rem'} p={'2rem'}>
             {favoriteList.map((value, index) => {
               return (
                 <GridItem key={index}>
-                  <Flex flexDir={"column"} gap={1} alignItems={'center'} justifyContent={'center'} >
+                  <Flex flexDir={"column"} p={'0.5rem'} borderRadius={'0.4rem'} boxShadow={'dark-lg'} height={'100%'} gap={"0.5rem"} alignItems={'center'} justifyContent={'flex-start'} >
                     <Link to={`/anime/${value.mal_id}`} style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column" }}>
                       <Image
                         src={value.images.jpg.image_url}
@@ -130,6 +130,7 @@ export const Favorite = () => {
                       </Text>
                     </Link>
                     <motion.button
+                      style={{ display: "flex", alignItems: "flex-end", height: "100%" }}
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                     >

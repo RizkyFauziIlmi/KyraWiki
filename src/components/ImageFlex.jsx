@@ -83,14 +83,14 @@ export const ImageFlex = ({
   return (
     <>
       <Link to={linkTitle}>
-        <Flex p={5} gap={2} alignItems={"center"} justifyContent={"center"} >
+        <Flex alignItems={"center"} justifyContent={"center"} >
           <Heading>{title}</Heading>
           <motion.div whileInView={{ rotate: '-90deg' }}>
             <StatDownArrow />
           </motion.div>
         </Flex>
       </Link>
-      <Flex justifyContent={"center"}>
+      <Flex justifyContent={"center"} pb={'5rem'}>
         {datas.map((data) => {
           return (
             <Link
