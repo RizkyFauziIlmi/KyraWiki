@@ -83,7 +83,7 @@ export const ImageFlex = ({
   return (
     <>
       <Link to={linkTitle}>
-        <Flex alignItems={"center"} justifyContent={"center"} >
+        <Flex alignItems={"center"} justifyContent={"center"} p={'0.8rem'}>
           <Heading>{title}</Heading>
           <motion.div whileInView={{ rotate: '-90deg' }}>
             <StatDownArrow />
