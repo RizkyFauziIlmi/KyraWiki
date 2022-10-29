@@ -1,5 +1,5 @@
 import React from 'react'
-import { ChakraProvider } from '@chakra-ui/react';
+import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 import { NavBar } from './components/NavBar';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { RandomGenerator } from './pages/RandomGenerator';
@@ -22,11 +22,22 @@ import { Register } from './pages/Register';
 import { Favorite } from './pages/Favorite';
 import { PrivateRoutes } from './utils/PrivateRoutes';
 
+const theme = extendTheme({
+  styles: {
+    global: {
+      "html, body": {
+        
+        fontWeight: "semibold",
+      },
+    },
+  },
+})
+
 
 const App = () => {
 
   return (
-    <ChakraProvider>
+    <ChakraProvider theme={theme} >
       <BrowserRouter>
         <NavBar />
         <CurrentPath />
@@ -44,7 +55,7 @@ const App = () => {
           <Route path='/ranking/:category' element={<RankingPage />} />
           <Route element={<PrivateRoutes />}>
             <Route path='/profile' element={<Profile />} />
-            <Route path='/favorites' element={<Favorite />} />
+            <Route path='/profile/favorites' element={<Favorite />} />
           </Route>
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />

@@ -79,10 +79,11 @@ export const GridPhoto = ({
       <Grid gridTemplateColumns={gridTemplate} gap={6} p={2}>
         {datas.map((data, index) => {
           return (
-            <GridItem key={index}>
-              <Skeleton isLoaded={isLoaded}>
+            <GridItem key={index} >
+              <Skeleton isLoaded={isLoaded} height={"100%"}>
                 <Box
                   boxShadow={"2xl"}
+                  height={"100%"}
                   p={2}
                   overflow="hidden"
                   width={"fit-content"}

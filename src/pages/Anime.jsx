@@ -20,6 +20,7 @@ import { Synopsis } from "../components/Synopsis";
 import { Background } from "../components/Background";
 import { Relations } from "../components/Relations";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import { getByIdFull } from "../utils/fetch";
 
 export const Anime = () => {
@@ -28,7 +29,21 @@ export const Anime = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    getByIdFull(id, "anime", setDatas, false, setIsLoaded);
+    const getByIdFull = async () => {
+      await axios
+        .get(`https://api.jikan.moe/v4/anime/${id}/full`)
+        .then((response) => {
+          setDatas(response.data.data);
+          setTimeout(() => {
+            setIsLoaded(true);
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+
+    getByIdFull();
   }, [id]);
 
   const showContent = () => {
@@ -45,7 +60,11 @@ export const Anime = () => {
               target={`../${datas.mal_id}`}
               isLoaded={isLoaded}
             />
-            {window.innerWidth <= 854 ? "" : <OtherSection datas={datas} isLoaded={isLoaded} />}
+            {window.innerWidth <= 854 ? (
+              ""
+            ) : (
+              <OtherSection datas={datas} isLoaded={isLoaded} />
+            )}
           </VStack>
           <Flex flexDir={"column"} width={"100%"}>
             <Player datas={datas} isLoaded={isLoaded} />
@@ -116,7 +135,7 @@ export const Anime = () => {
         </Flex>
       );
     } else {
-      getByIdFull(id, "anime", setDatas);
+      getByIdFull();
     }
   };
 

@@ -18,10 +18,35 @@ import {
   AiTwotoneCrown,
   AiTwotoneLike,
 } from "react-icons/ai";
+import { useEffect } from "react";
+import axios from "axios";
 
-export const Ranking = ({ datas, isLoaded, category = "" }) => {
+export const Ranking = ({ category = "" }) => {
   const relation = ["anime", "manga", "characters", "people"];
   const [currentIndex, setCurrentIndex] = React.useState(0);
+  const [datas, setDatas] = React.useState([])
+  const [isLoaded, setIsLoaded] = React.useState(false)
+
+  useEffect(() => {
+    setIsLoaded(false)
+    const getTop = async () => {
+      await axios.get(
+        `https://api.jikan.moe/v4/top/${category}`
+      )
+        .then((response) => {
+          setDatas(response.data.data);
+          setTimeout(() => {
+            setIsLoaded(true)
+          })
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    };
+
+    getTop()
+  }, [category])
+
   const width = useBreakpointValue(
     {
       base: "70vw",

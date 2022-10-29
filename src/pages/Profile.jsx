@@ -172,7 +172,7 @@ export const Profile = () => {
               whileTap={{ scale: 0.95 }}
               whileHover={{ scale: 1.05 }}
             >
-              <Link to={'/favorites'}>
+              <Link to={'/profile/favorites'} relative={'route'}>
                 <Button
                   rightIcon={<ArrowForwardIcon />}
                   leftIcon={<FcLike />}

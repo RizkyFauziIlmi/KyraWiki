@@ -24,7 +24,7 @@ import { FcDislike } from "react-icons/fc";
 export const Favorite = () => {
   const [user, loading, error] = useAuthState(auth);
   const [value, fireLoading, fireError] = useDocument(
-    doc(db, "infoAccount", localStorage.getItem("email"))
+    doc(db, "infoAccount", localStorage.getItem("email")) 
   );
   const [favoriteList, setFavoriteList] = useState([]);
   const navigate = useNavigate();

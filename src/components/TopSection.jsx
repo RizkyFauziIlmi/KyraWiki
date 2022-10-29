@@ -10,17 +10,32 @@ import {
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import axios from "axios";
+import { useEffect } from "react";
 
-export const TopSection = ({
-  datas,
-  heading,
-  urlCategory,
-  anime,
-  chara,
-  manga,
-  people,
-  isLoaded,
-}) => {
+export const TopSection = ({category, limit, urlCategory, heading, chara, anime, manga, people}) => {
+  const [datas, setDatas] = React.useState([])
+  const [isLoaded, setIsLoaded] = React.useState(false)
+
+  useEffect(() => {
+    const getTop = async () => {
+      await axios.get(
+        `https://api.jikan.moe/v4/top/${category}?limit=${limit}`
+      )
+        .then((response) => {
+          setDatas(response.data.data);
+          setTimeout(() => {
+            setIsLoaded(true)
+          })
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    };
+
+    getTop()
+  }, [category, limit])
+
   const height = useBreakpointValue(
     {
       base: "130px",
@@ -96,10 +111,10 @@ export const TopSection = ({
                     fontSize={"xs"}
                     textAlign={"center"}
                   >
-                    {chara === true ? `${data.name} (${data.name_kanji})` : ""}
-                    {anime === true ? `${data.title} (${data.score})` : ""}
-                    {manga === true ? `${data.title} (${data.score})` : ""}
-                    {people === true ? `${data.name} (${data.favorites})` : ""}
+                    {chara ? `${data.name} (${data.name_kanji})` : ""}
+                    {anime ? `${data.title} (${data.score})` : ""}
+                    {manga ? `${data.title} (${data.score})` : ""}
+                    {people ? `${data.name} (${data.favorites})` : ""}
                   </Text>
                 </Skeleton>
               </Flex>

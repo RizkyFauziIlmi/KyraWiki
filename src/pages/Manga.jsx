@@ -15,6 +15,7 @@ import { Synopsis } from "../components/Synopsis";
 import { Background } from "../components/Background";
 import { Relations } from "../components/Relations";
 import { getByIdFull } from "../utils/fetch";
+import axios from "axios";
 
 export const Manga = () => {
   const [datas, setDatas] = React.useState([]);
@@ -22,7 +23,21 @@ export const Manga = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    getByIdFull(id, "manga", setDatas, false, setIsLoaded);
+    const getByIdFull = async () => {
+      await axios
+        .get(`https://api.jikan.moe/v4/manga/${id}/full`)
+        .then((response) => {
+          setDatas(response.data.data);
+          setTimeout(() => {
+            setIsLoaded(true);
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+
+    getByIdFull();
   }, [id]);
 
   const showContent = () => {

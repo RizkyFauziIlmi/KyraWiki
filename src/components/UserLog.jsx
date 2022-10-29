@@ -14,7 +14,7 @@ import { LogoutButton } from "./LogoutButton";
 export const UserLog = ({ close }) => {
 
 
-  return auth.currentUser === null ? (
+  return !auth.currentUser ? (
     <Flex alignItems={"center"} justifyContent={"space-between"} p={2}>
       <Flex alignItems={"center"} gap={1}>
         <Avatar />
