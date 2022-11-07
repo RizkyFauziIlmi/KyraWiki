@@ -1,4 +1,4 @@
-import { Button, Flex, Heading, Image, Skeleton, Text, useToast } from "@chakra-ui/react";
+import { Button, Flex, Heading, Image, Skeleton, Text, useColorModeValue, useToast } from "@chakra-ui/react";
 import axios from "axios";
 import React from "react";
 import { useEffect } from "react";
@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 export const Jumbotron = () => {
   const [datas, setDatas] = React.useState([])
   const [isLoaded, setIsLoaded] = React.useState(false)
+  const opacity = useColorModeValue(0.8, 0.5)
   const toast = useToast()
 
   useEffect(() => {
@@ -37,7 +38,7 @@ export const Jumbotron = () => {
           {datas.map((data, index) => {
             return (
               <Image
-                opacity={0.2}
+                opacity={opacity}
                 width={"20vw"}
                 src={data.images.jpg.image_url}
                 key={index}
@@ -53,7 +54,7 @@ export const Jumbotron = () => {
             transform={"translate(-50%, -50%)"}
           >
             <Heading size={"lg"}>KYRAWIKI</Heading>
-            <Text fontSize={"xs"} opacity={0.8}>
+            <Text fontSize={"xs"}>
               Get New Update About Anime and Manga
             </Text>
             <Link to={'/ranking'}>

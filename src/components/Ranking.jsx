@@ -163,7 +163,7 @@ export const Ranking = ({ category = "" }) => {
               <Heading size={"md"}>
                 {index + 1 === 1 ? (
                   <Flex alignItems={"center"} flexDir={"column"}>
-                    <AiTwotoneCrown />
+                    <AiTwotoneCrown color="yellow"/>
                     <Text>{index + 1}</Text>
                   </Flex>
                 ) : index + 1 > 1 && index + 1 <= 10 ? (

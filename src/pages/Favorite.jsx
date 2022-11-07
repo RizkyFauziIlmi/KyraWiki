@@ -13,7 +13,6 @@ import {
   Image,
   Spinner,
   Text,
-  useBreakpointValue,
   useToast,
 } from "@chakra-ui/react";
 import { Link, useNavigate } from "react-router-dom";
@@ -29,16 +28,6 @@ export const Favorite = () => {
   const [favoriteList, setFavoriteList] = useState([]);
   const navigate = useNavigate();
   const toast = useToast();
-
-  const gridTemplate = useBreakpointValue(
-    {
-      base: "repeat(2, 1fr)",
-      md: "repeat(6, 1fr)",
-    },
-    {
-      fallback: "md",
-    }
-  );
 
   useEffect(() => {
     const getFavoriteList = () => {
@@ -113,7 +102,7 @@ export const Favorite = () => {
           </span>
         )}
         {value && (
-          <Grid templateColumns={gridTemplate} gap={'1rem'} p={'2rem'}>
+          <Grid templateColumns={['repeat(2, 1fr)', 'repeat(2, 1fr)', 'repeat(6, 1fr)', 'repeat(6, 1fr)']} gap={'1rem'} p={'2rem'}>
             {favoriteList.map((value, index) => {
               return (
                 <GridItem key={index}>

@@ -136,7 +136,7 @@ export const Register = () => {
             </InputGroup>
           </FormControl>
           <Flex flexDir={"column"}>
-            <Button mt={2} onClick={createAccount}>
+            <Button mt={2} onClick={createAccount} isDisabled={password !== confirmPassword}>
               Create an Account
             </Button>
             <Text fontWeight={"bold"} textAlign={"center"}>

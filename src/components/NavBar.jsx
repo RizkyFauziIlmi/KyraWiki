@@ -21,12 +21,12 @@ import {
   AccordionIcon,
   Box,
   InputRightElement,
+  HStack,
 } from "@chakra-ui/react";
 import { MoonIcon, SunIcon, HamburgerIcon, SearchIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
 import { useEffect, useRef } from "react";
 import { UserLog } from "./UserLog";
-
 
 export const NavBar = () => {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -56,10 +56,10 @@ export const NavBar = () => {
         <Heading size={"md"}>KyraWiki</Heading>
       </Link>
       <InputGroup>
-        <Input value={q} onChange={changeValue} />
-        <InputRightElement>
+        <Input placeholder="Search anime..." value={q} onChange={changeValue} />
+        <InputRightElement width='3rem'>
           <Link to={`search/${q}`} target={"_self"}>
-            <IconButton icon={<SearchIcon />} ref={searchRef} />
+            <IconButton size={'sm'} height={'1.75rem'} icon={<SearchIcon />} ref={searchRef} />
           </Link>
         </InputRightElement>
       </InputGroup>
@@ -80,7 +80,7 @@ export const NavBar = () => {
           <DrawerHeader>Menu</DrawerHeader>
 
           <DrawerBody>
-            <UserLog close={onClose}/> 
+            <UserLog close={onClose} />
             <Accordion defaultIndex={0}>
               <AccordionItem>
                 <h2>
@@ -91,22 +91,24 @@ export const NavBar = () => {
                     <AccordionIcon />
                   </AccordionButton>
                 </h2>
-                <AccordionPanel pb={4}>
-                  <Link to="/ranking">
-                    <Button variant={'ghost'}>All Ranking</Button>
-                  </Link>
-                  <Link to="ranking/anime">
-                    <Button variant={'ghost'}>Anime Ranking</Button>
-                  </Link>
-                  <Link to="ranking/manga">
-                    <Button variant={'ghost'}>Manga Ranking</Button>
-                  </Link>
-                  <Link to="ranking/characters">
-                    <Button variant={'ghost'}>Characters Ranking</Button>
-                  </Link>
-                  <Link to="ranking/people">
-                    <Button variant={'ghost'}>People Ranking</Button>
-                  </Link>
+                <AccordionPanel pb={4} overflowX={'auto'}>
+                  <HStack>
+                    <Link to="/ranking">
+                      <Button>All Ranking</Button>
+                    </Link>
+                    <Link to="ranking/anime">
+                      <Button>Anime Ranking</Button>
+                    </Link>
+                    <Link to="ranking/manga">
+                      <Button>Manga Ranking</Button>
+                    </Link>
+                    <Link to="ranking/characters">
+                      <Button>Characters Ranking</Button>
+                    </Link>
+                    <Link to="ranking/people">
+                      <Button>People Ranking</Button>
+                    </Link>
+                  </HStack>
                 </AccordionPanel>
               </AccordionItem>
               <AccordionItem>
@@ -119,12 +121,14 @@ export const NavBar = () => {
                   </AccordionButton>
                 </h2>
                 <AccordionPanel pb={4}>
-                  <Link to="/anime-recommendation">
-                    <Button variant={'ghost'}>Anime Recommendation</Button>
-                  </Link>
-                  <Link to="/schedule">
-                    <Button variant={'ghost'}>Schedule</Button>
-                  </Link>
+                  <HStack overflowX={'auto'}>
+                    <Link to="/anime-recommendation">
+                      <Button>Anime Recommendation</Button>
+                    </Link>
+                    <Link to="/schedule">
+                      <Button>Schedule</Button>
+                    </Link>
+                  </HStack>
                 </AccordionPanel>
               </AccordionItem>
               <AccordionItem>
@@ -137,9 +141,11 @@ export const NavBar = () => {
                   </AccordionButton>
                 </h2>
                 <AccordionPanel pb={4}>
-                  <Link to="/random-generator">
-                    <Button variant={'ghost'}>Random Generator</Button>
-                  </Link>
+                  <HStack overflowX={'auto'}>
+                    <Link to="/random-generator">
+                      <Button>Random Generator</Button>
+                    </Link>
+                  </HStack>
                 </AccordionPanel>
               </AccordionItem>
             </Accordion>

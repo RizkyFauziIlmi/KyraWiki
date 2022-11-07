@@ -21,17 +21,46 @@ import { Login } from './pages/Login';
 import { Register } from './pages/Register';
 import { Favorite } from './pages/Favorite';
 import { PrivateRoutes } from './utils/PrivateRoutes';
+import { mode } from '@chakra-ui/theme-tools';
 
-const theme = extendTheme({
-  styles: {
-    global: {
-      "html, body": {
-        
-        fontWeight: "semibold",
-      },
+const styles = {
+  global: props => ({
+    body: {
+      color: mode('#000000', '#FAFAFA')(props),
+      bg: mode('#FAFAFA', '#121212')(props),
+      lineHeight: 'base',
+      fontWeight: 'semibold'
+    },
+  }),
+};
+
+const components = {
+  Button: {
+    variants: {
+      solid: props => ({
+        bg: mode('yellow', 'yellow')(props),
+        color: 'black'
+      }),
+    },
+    defaultProps: {
+      size: ['xs', 'xs', 'md', 'md'],
+      variant: 'solid',
     },
   },
-})
+  Drawer : {
+    baseStyle: props => ({
+      dialog: {
+        bg: mode('#FAFAFA', '#121212')(props),
+        color: mode('#121212', '#FAFAFA')(props)
+      },
+    }),
+  },
+};
+
+const theme = extendTheme({
+  components,
+  styles,
+});
 
 
 const App = () => {

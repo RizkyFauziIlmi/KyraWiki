@@ -20,7 +20,7 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { StarIcon, ViewIcon } from "@chakra-ui/icons";
-import { FcLikePlaceholder } from "react-icons/fc";
+import { FcLike } from "react-icons/fc";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { arrayUnion, doc, updateDoc } from "firebase/firestore";
 import { auth, db } from "../firebase/firebase-config";
@@ -30,19 +30,30 @@ export const HeadSection = ({ datas, target, isLoaded }) => {
   const { id } = useParams();
   const toast = useToast();
   const navigate = useNavigate();
+  const idToast = 'idToast'
 
   const updateFavoriteList = async () => {
     if (auth.currentUser !== null) {
       await updateDoc(doc(db, "infoAccount", localStorage.getItem("email")), {
-        favorites: arrayUnion({ status: true, mal_id: `${id}` }),
+        favorites: arrayUnion({ status: true, mal_id: `${id}`, genre: 'ok' }),
       }).then(() => {
+        if (!toast.isActive(idToast)) {
+          toast({
+            id: idToast,
+            status: "success",
+            title: "Added Successfully",
+            description: `${datas.title} added to favorite list`,
+            isClosable: true,
+          });
+        }
+      }).catch((error) => {
         toast({
-          status: "success",
-          title: "Added Successfully",
-          description: `${datas.title} added to favorite list`,
+          status: "Error",
+          title: "Added Failed",
+          description: `Because: ${error.message}`,
           isClosable: true,
         });
-      });
+      })
     } else {
       navigate("/login");
       toast({
@@ -155,7 +166,7 @@ export const HeadSection = ({ datas, target, isLoaded }) => {
             whileTap={{ scale: 0.95 }}
           >
             <Button
-              leftIcon={<FcLikePlaceholder />}
+              leftIcon={<FcLike />}
               size={"sm"}
               onClick={updateFavoriteList}
             >
